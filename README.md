@@ -6,6 +6,7 @@ compiled into every machine-readable signal AI systems read, audited for its
 backed by tamper-evident evidence.
 
 > Rapport de recherche et décision GO/NO-GO (FR) : [`docs/RAPPORT.md`](docs/RAPPORT.md)
+> NOVARYS comme tiers neutre éditeurs–IA (leviers légaux, tests, décision) : [`docs/ARBITRE.md`](docs/ARBITRE.md)
 
 ## Why
 
@@ -35,7 +36,11 @@ Measured on real data (see `studies/`):
 | Policy compiler | `novarys compile policy.json -o out/` | canonical `robots.txt` (incl. the vendor-neutral `__usage_ai-training` group, AIPREF `Content-Usage`, `Content-Signal`), `/.well-known/tdmrep.json`, HTTP headers + nginx snippet, meta tags, RSL `license.xml`, reservation statements (EN/FR/DE + market notes), hashed manifest. **Self-verified** against the policy for every known agent under two parser dialects. |
 | Auditor | `novarys audit --robots robots.txt [--headers h.json --html page.html --tdmrep tdmrep.json --tos terms.txt] --jurisdiction EU,FR,JP,US,UK` | effective access per agent, contradictions (partial opt-outs, obsolete tokens, wildcard escapes, parser divergence, ambiguous groups, Google-Extended misconceptions), reservation-robustness score with its formula, legal effect per market, visibility eligibility per AI answer surface |
 | Log verifier | `novarys logs access.log --ledger evidence/ --url https://site/robots.txt --ranges GPTBot=gptbot.json` | per agent: requests, verified vs spoofed (vendor IP ranges), fetches of disallowed paths under the robots.txt in force at that time, AI referrals, crawl-to-referral ratio. Human IPs are never output. |
-| Evidence ledger | `novarys evidence add|verify|list|tsq DIR` | append-only hash-chained snapshots; RFC 3161 timestamp request (DER) for the head hash, to send to any TSA |
+| Evidence ledger | `novarys evidence add\|verify\|list\|tsq DIR` | append-only hash-chained snapshots; RFC 3161 timestamp request (DER) for the head hash, to send to any TSA |
+| Transparency log | `novarys tlog append\|head\|prove\|consistency\|tsq DIR`, `novarys check proof.json` | append-only RFC 9162 Merkle log of public commitments; inclusion and consistency proofs verifiable by anyone offline |
+| Neutral constat | `novarys snapshot LEDGER --url U --file F --tlog DIR`, `novarys constat LEDGER --url U --as-of T [--logs-json L --tlog DIR --jurisdiction EU,FR] --md out.md` | deterministic, requester-independent technical report at a date; facts only, refuses legal-conclusion wording |
+| Usage metering | `novarys meter report\|commit\|aggregate` | method `novarys-metering/0.1`: per-publisher report, hashed commitment, k-anonymous (k ≥ 5) aggregate with no price data |
+| Canaries | `novarys canary create\|verify\|test` | pre-registered randomised canaries with an exact paired sign-flip test |
 | Knowledge base | `novarys registry`, `novarys markets` | 39 AI/search agents with purpose, effect, verification source and verification status; 30 markets + EU baseline |
 
 Pure Python ≥ 3.10, no dependencies, works offline.
@@ -44,7 +49,7 @@ Pure Python ≥ 3.10, no dependencies, works offline.
 pip install -e .
 novarys compile examples/policy-media-fr.json -o out/
 novarys audit --robots out/robots.txt --tdmrep out/.well-known/tdmrep.json --jurisdiction EU,FR,JP
-python -m unittest discover -s tests      # 40 tests, incl. Google's reference suite
+python -m unittest discover -s tests      # 50 tests, incl. Google's reference suite
 ```
 
 ## Measured quality

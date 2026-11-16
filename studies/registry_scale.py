@@ -23,96 +23,16 @@ import random
 import time
 
 
-def h(b: bytes) -> bytes:
-    return hashlib.sha256(b).digest()
+import sys
 
-
-def leaf_hash(data: bytes) -> bytes:
-    return h(b"\x00" + data)
-
-
-def node_hash(left: bytes, right: bytes) -> bytes:
-    return h(b"\x01" + left + right)
-
-
-def largest_pow2_below(n: int) -> int:
-    k = 1
-    while k << 1 < n:
-        k <<= 1
-    return k
-
-
-class MerkleLog:
-    """RFC 9162 Merkle tree with cached levels for fast proofs."""
-
-    def __init__(self, leaves: list[bytes]):
-        self.leaves = leaves
-
-    def root(self) -> bytes:
-        return self._mth(0, len(self.leaves))
-
-    def _mth(self, lo: int, hi: int) -> bytes:
-        n = hi - lo
-        if n == 1:
-            return self.leaves[lo]
-        k = largest_pow2_below(n)
-        return node_hash(self._mth(lo, lo + k), self._mth(lo + k, hi))
-
-    def inclusion_proof(self, m: int) -> list[bytes]:
-        return self._path(m, 0, len(self.leaves))
-
-    def _path(self, m: int, lo: int, hi: int) -> list[bytes]:
-        n = hi - lo
-        if n == 1:
-            return []
-        k = largest_pow2_below(n)
-        if m - lo < k:
-            return self._path(m, lo, lo + k) + [self._mth(lo + k, hi)]
-        return self._path(m, lo + k, hi) + [self._mth(lo, lo + k)]
-
-
-def verify_inclusion(leaf: bytes, index: int, size: int, proof: list[bytes], root: bytes) -> bool:
-    """RFC 9162 §2.1.3.2 verification algorithm."""
-    if index >= size:
-        return False
-    fn, sn = index, size - 1
-    r = leaf
-    for p in proof:
-        if sn == 0:
-            return False
-        if fn & 1 or fn == sn:
-            r = node_hash(p, r)
-            while not fn & 1 and fn != 0:
-                fn >>= 1
-                sn >>= 1
-        else:
-            r = node_hash(r, p)
-        fn >>= 1
-        sn >>= 1
-    return sn == 0 and r == root
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from novarys.transparency import Tree, leaf_hash, verify_consistency, verify_inclusion  # noqa: E402
 
 
 def canonical(rec: dict, snapshot: str) -> bytes:
     body = {"domain": rec["domain"], "snapshot": snapshot, "robots": bool(rec.get("has_robots")),
             "blocks": sorted(rec.get("blocks_ai") or []), "star_disallow_root": bool(rec.get("star_disallow_root"))}
     return json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
-
-
-class FastMerkle(MerkleLog):
-    """Same tree, built bottom-up once so that proofs are O(log n) lookups."""
-
-    def __init__(self, leaves: list[bytes]):
-        super().__init__(leaves)
-        self.memo: dict[tuple[int, int], bytes] = {}
-
-    def _mth(self, lo: int, hi: int) -> bytes:
-        key = (lo, hi)
-        v = self.memo.get(key)
-        if v is None:
-            v = super()._mth(lo, hi)
-            if hi - lo >= 64:  # memoise only the upper levels to bound memory
-                self.memo[key] = v
-        return v
 
 
 def run(path: str) -> dict:
@@ -125,9 +45,9 @@ def run(path: str) -> dict:
         records.append(data)
         leaves.append(leaf_hash(data))
     t_load = time.perf_counter() - t0
-    log = FastMerkle(leaves)
+    log = Tree(leaves)
     t1 = time.perf_counter()
-    root = log.root()
+    root = log.mth()
     t_root = time.perf_counter() - t1
     rnd = random.Random(42)
     idx = rnd.sample(range(len(leaves)), 1000)
@@ -143,6 +63,13 @@ def run(path: str) -> dict:
     forged["blocks"] = [b for b in forged["blocks"] if b != "gptbot"] + ["__forged__"]
     forged_leaf = leaf_hash(json.dumps(forged, sort_keys=True, separators=(",", ":")).encode())
     tamper_detected = not verify_inclusion(forged_leaf, i, len(leaves), proofs[0], root)
+    # consistency: the full log only appended to its first 900,000 records
+    m = 900_000
+    old_root = log.mth(0, m)
+    t4 = time.perf_counter()
+    cproof = log.consistency_proof(m)
+    consistent = verify_consistency(m, len(leaves), old_root, root, cproof)
+    t_cons = time.perf_counter() - t4
     raw_bytes = sum(len(r) for r in records)
     return {
         "snapshot": snapshot, "records": len(records), "canonical_bytes_total": raw_bytes,
@@ -151,6 +78,8 @@ def run(path: str) -> dict:
         "root_seconds": round(t_root, 2), "proof_hashes": len(proofs[0]), "proof_bytes": 32 * len(proofs[0]),
         "proof_ms": round(1000 * t_proof, 3), "verify_ms": round(1000 * t_verify, 3),
         "all_1000_proofs_verified": ok, "tamper_detected": tamper_detected,
+        "consistency_900k_to_full_verified": consistent, "consistency_proof_hashes": len(cproof),
+        "consistency_seconds": round(t_cons, 3), "implementation": "novarys.transparency",
         "example_record": records[i].decode(),
     }
 
