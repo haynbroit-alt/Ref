@@ -158,7 +158,7 @@ def audit(inp: Inputs) -> Report:
                 f"Add 'User-agent: {repl[0]}' / 'Disallow: /'.", [a.token] + repl))
         if not any(v for k, v in neutral.items() if k != "robots.txt blocks every unnamed bot (User-agent: *)") and not star_root:
             findings.append(Finding("high", "NAMED_BOTS_ONLY", "Reservation relies only on named bots",
-                "No vendor-neutral signal (TDMRep, __usage_ai-training, AIPREF, ToS clause). A Dutch court held that a robots.txt naming specific AI bots is not a general reservation against other bots (Rb Amsterdam, 30 Oct 2024, ECLI:NL:RBAMS:2024:6563).",
+                "No vendor-neutral signal (TDMRep, __usage_ai-training, AIPREF, ToS clause). A robots.txt naming only some bots may not reserve rights against the others: in a Dutch case where the robots.txt named only some AI bots, the court found the scraper was not effectively excluded; commentators read it as requiring the opt-out to target the bots concerned (Rb Amsterdam, 30 Oct 2024, ECLI:NL:RBAMS:2024:6563; appeal reported pending).",
                 "Publish /.well-known/tdmrep.json, a __usage_ai-training group and a reservation clause in the terms of service."))
         if not usage_group:
             findings.append(Finding("medium", "NO_USAGE_TOKEN", "No vendor-neutral __usage_ai-training group",

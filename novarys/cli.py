@@ -81,7 +81,13 @@ def cmd_logs(a) -> int:
         tok, path = spec.split("=", 1)
         ranges[tok] = logs.load_ranges(path)
     if a.ledger:
+        if not a.url:
+            print("--url is required with --ledger (the URL used in `novarys snapshot`)")
+            return 2
         led = evidence.Ledger(a.ledger)
+        if not any(e.url == a.url for e in led.entries()):
+            print(f"no snapshot of {a.url} in {a.ledger}: disallowed fetches cannot be assessed")
+            return 2
         cache: dict[str, robots.RobotsTxt] = {}
 
         def robots_for(t):
@@ -293,7 +299,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("policy"); s.add_argument("robots"); s.set_defaults(fn=cmd_verify)
 
     s = sub.add_parser("logs", help="analyse access logs for AI agents, compliance and referrals")
-    s.add_argument("log"); s.add_argument("--robots"); s.add_argument("--ledger"); s.add_argument("--url", default="/robots.txt")
+    s.add_argument("log"); s.add_argument("--robots"); s.add_argument("--ledger"); s.add_argument("--url", help="URL under which robots.txt snapshots were recorded (required with --ledger)")
     s.add_argument("--ranges", action="append", help="TOKEN=ip-ranges.json (repeatable)"); s.add_argument("--json", action="store_true")
     s.set_defaults(fn=cmd_logs)
 

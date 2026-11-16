@@ -142,8 +142,11 @@ def tdmrep_reserves_root(entries: list[dict]) -> bool:
     for e in entries:
         loc = str(e.get("location", ""))
         if loc in ("/", "/*", "*", "") or loc.endswith("://") or re.fullmatch(r"https?://[^/]+/?\*?", loc):
-            if int(e.get("tdm-reservation", 0)) == 1:
-                return True
+            try:
+                if int(e.get("tdm-reservation", 0)) == 1:
+                    return True
+            except (TypeError, ValueError):
+                continue
     return False
 
 

@@ -27,18 +27,18 @@
     "root_disagreements_by_agent": {
       "Applebot-Extended": 21,
       "CCBot": 6,
-      "ClaudeBot": 2,
       "Amazonbot": 2,
+      "ClaudeBot": 2,
       "Google-Extended": 2,
+      "Bytespider": 1,
       "Claude-SearchBot": 1,
       "Claude-User": 1,
       "GPTBot": 1,
-      "meta-externalagent": 1,
-      "Bytespider": 1
+      "meta-externalagent": 1
     },
     "files_where_parser_disagrees_with_novarys_on_some_path": {
-      "protego (Scrapy)": 116,
-      "python-urllib": 146
+      "python-urllib": 146,
+      "protego (Scrapy)": 116
     },
     "novarys_findings_files_per_code": {
       "WILDCARD_ESCAPE": 328,

@@ -15,7 +15,7 @@
 3. **Résultats mesurés :**
    - 100 % de conformité à la suite de tests de référence de Google, contre 90,1 % pour le parseur Python standard et 91,5 % pour celui de Scrapy ;
    - une étude originale sur 998 497 domaines et 30 marchés ;
-   - 40 tests automatisés passent.
+   - la suite de tests automatisés passe (40 tests à cette étape, 50 après la phase « tiers neutre », voir `docs/ARBITRE.md`).
 
 ## 1. OBSERVER — méthode et limites
 
@@ -73,7 +73,7 @@ Mesure NOVARYS sur 998 497 domaines (`studies/results/market_gap.md`), restreint
 
 À cela s'ajoutent **2 138 sites** qui ne bloquent que les jetons obsolètes d'Anthropic (`anthropic-ai`, `claude-web`). Ils croient avoir bloqué Anthropic, mais `ClaudeBot` passe.
 
-**Pourquoi c'est juridiquement grave.** Le tribunal d'Amsterdam (30 octobre 2024, ECLI:NL:RBAMS:2024:6563) a jugé qu'un robots.txt bloquant des bots nommés n'est pas une réserve générale contre les autres. Le code de pratique GPAI ne rend obligatoire que robots.txt (RFC 9309), et les amendes de l'AI Act (art. 53(1)(c)) sont applicables depuis le 2 août 2026. Un site européen sur deux qui croit avoir réservé ses droits ne l'a donc fait que partiellement.
+**Pourquoi c'est juridiquement grave.** Dans l'affaire jugée par le tribunal d'Amsterdam (30 octobre 2024, ECLI:NL:RBAMS:2024:6563), le robots.txt ne nommait que certains bots, et le robot en cause n'a pas été jugé effectivement exclu. Les commentateurs en déduisent qu'une réserve doit viser les robots concernés. *Correction du 16 nov. 2026 : il s'agit d'une lecture de commentateurs ; le jugement est peu clair sur le robot utilisé, et un appel serait pendant.* Le code de pratique GPAI ne rend obligatoire que robots.txt (RFC 9309), et les amendes de l'AI Act (art. 53(1)(c)) sont applicables depuis le 2 août 2026. Un site européen sur deux qui croit avoir réservé ses droits ne l'a donc fait que partiellement.
 
 *Réserves :* le ccTLD n'est qu'un indicateur approximatif du marché ; seuls les blocages `Disallow: /` sur des groupes nommés sont mesurés ; la réserve peut aussi figurer dans les CGU.
 
@@ -109,7 +109,7 @@ Chaque changement rend obsolètes des configurations existantes, comme `anthropi
 
 | Preuve | Niveau | Éléments |
 |---|---|---|
-| **Technique** | **Fort, démontré ici** | 142/142 tests de référence Google ; auto-vérification du compilateur (39 agents × 2 dialectes) ; requête RFC 3161 validée par OpenSSL ; 40 tests ; aucune dépendance |
+| **Technique** | **Fort, démontré ici** | 142/142 tests de référence Google ; auto-vérification du compilateur (39 agents × 2 dialectes) ; requête RFC 3161 validée par OpenSSL ; tests automatisés ; aucune dépendance |
 | **Juridique** | **Fort pour le besoin ; risques maîtrisables pour l'outil** | Art. 4(3) DSM, art. 53(1)(c) de l'AI Act (amendes depuis le 2 août 2026), Rb Amsterdam 2024, code GPAI mesure 1.3, CMA 3 juin 2026. Risques propres à l'outil au §9 |
 | **Commerciale** | **Indirecte seulement** | Demande forte pour la catégorie : 93 155 sites du top 1M bloquent des IA ; 30 % des scrapes contournent robots.txt (TollBit, T4 2025) ; 70,6 % des sites qui bloquent ChatGPT-User restent cités (BuzzStream) ; procès ; contrats de licence. **Aucune preuve de disposition à payer pour NOVARYS** : il faudrait des entretiens clients, que je n'ai pas le droit de mener sans votre accord |
 | **Économique** | **Plausible** | Coût marginal quasi nul (traitement local, fichiers de quelques Ko). Prix de référence : Dark Visitors 29 $/mois, Otterly 29–489 $, Peec 85–425 €, Conductor ≈ 49 k$/an. Les contrats de licence en jeu se chiffrent en millions par an |

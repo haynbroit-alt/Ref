@@ -130,9 +130,9 @@ def real_files(path):
     return {
         "files": n,
         "files_where_parsers_disagree_on_root_access_for_an_AI_agent": any_root_div_files,
-        "root_disagreements_by_agent": dict(root_div.most_common()),
+        "root_disagreements_by_agent": dict(sorted(root_div.items(), key=lambda kv: (-kv[1], kv[0]))),
         "files_where_parser_disagrees_with_novarys_on_some_path": dict(path_div_files),
-        "novarys_findings_files_per_code": dict(findings.most_common()),
+        "novarys_findings_files_per_code": dict(sorted(findings.items(), key=lambda kv: (-kv[1], kv[0]))),
         "files_with_high_or_critical_finding": sev_files["high_or_critical"],
         "training_optout_files_scored": len(scores),
         "reservation_score_median": med,
