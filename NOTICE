@@ -1,0 +1,12 @@
+NOVARYS OMNISEARCH
+
+Third-party material:
+- tests/fixtures/google_robots_conformance.json: test cases derived from
+  google/robotstxt robots_test.cc, Copyright 2019 Google LLC, Apache License 2.0.
+- studies/results/market_gap.*: aggregates computed from the Crawlora
+  "AI-Crawler Blocking Index" (Tranco top 1M, 2026-06-20), CC BY 4.0,
+  https://github.com/Crawlora-org/ai-crawler-blocking-index-data
+- studies/results/benchmark.json: aggregates computed on robots.txt files
+  published by the "robots.txt AI allow-list study" (Ghaith Abdullah, Nov 2026),
+  https://github.com/Ghaith-Abdullah/robots-ai-allowlist-study-2026 ; its results
+  data is CC BY 4.0, the raw third-party robots.txt files are not redistributed here.
