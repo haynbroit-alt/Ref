@@ -103,6 +103,7 @@ class AgentStats:
     unverifiable: int = 0
     disallowed_fetches: int = 0
     disallowed_fetches_verified: int = 0
+    not_assessable: int = 0  # no robots.txt snapshot in force at request time: compliance cannot be assessed
     sample_disallowed_fetches: list[str] = field(default_factory=list)
 
 
@@ -159,7 +160,9 @@ def analyse(lines: Iterable[str], robots_for: Callable[[datetime], robots.Robots
                 state = "spoofed"
         setattr(s, state, getattr(s, state) + 1)
         rb = robots_for(h.time)
-        if rb is not None:
+        if rb is None:
+            s.not_assessable += 1
+        else:
             versions.add(id(rb))
             if h.path != "/robots.txt" and not rb.can_fetch(a.token, h.path) and state != "spoofed":
                 s.disallowed_fetches += 1
@@ -175,5 +178,6 @@ def analyse(lines: Iterable[str], robots_for: Callable[[datetime], robots.Robots
     for op in set(by_op_crawl) | set(refs):
         ctr[op] = round(by_op_crawl[op] / refs[op], 1) if refs[op] else None
     notes = ["Spoofed requests (claimed AI user agent from an IP outside the vendor's published ranges) are excluded from disallowed-fetch counts.",
-             "User-triggered fetchers (ChatGPT-User, Perplexity-User, ...) are documented by some vendors as not bound by robots.txt."]
+             "User-triggered fetchers (ChatGPT-User, Perplexity-User, ...) are documented by some vendors as not bound by robots.txt.",
+             "'not_assessable' counts requests made when no robots.txt snapshot was in force: no evidence exists of the reservation at that time."]
     return LogReport(n, parsed, stats, dict(refs), ctr, len(versions), notes)

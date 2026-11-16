@@ -130,6 +130,15 @@ class TestMetering(unittest.TestCase):
         for w in ("price", "eur", "usd", "rate_card", "pub-0"):
             self.assertNotIn(w, text)
 
+    def test_dominance_rule(self):
+        big = {"agents": {"GPTBot": {"requests": 100000, "verified": 100000, "spoofed": 0}}, "referrals": {}}
+        small = {"agents": {"GPTBot": {"requests": 100, "verified": 100, "spoofed": 0}}, "referrals": {}}
+        reps = [metering.publisher_report(big, "big", "2026-10")] + [metering.publisher_report(small, f"s{i}", "2026-10") for i in range(5)]
+        agg = metering.aggregate(reps)
+        self.assertEqual(agg["vendors"]["OpenAI"]["requests_not_spoofed_total"], "suppressed (dominance rule)")
+        balanced = [metering.publisher_report(small, f"s{i}", "2026-10") for i in range(6)]
+        self.assertEqual(metering.aggregate(balanced)["vendors"]["OpenAI"]["requests_not_spoofed_total"], 600)
+
     def test_commitment(self):
         with tempfile.TemporaryDirectory() as d:
             rep = metering.publisher_report(self.synthetic(1), "pub-1", "2026-10")

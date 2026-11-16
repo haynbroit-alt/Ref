@@ -132,6 +132,8 @@ C'est un calcul de modèle : **aucun acheteur n'a confirmé**, et aucun contact 
 
 ## 9. Ce qui exige votre autorisation
 
+Le dossier de pilote est prêt en brouillon, non envoyé, dans [`docs/pilote/`](pilote/README.md) : proposition, méthode normative, charte de gouvernance, données, mode d'emploi répété par `examples/pilot_demo.py`, et projets de messages.
+
 1. Publier le journal et la méthode `novarys-metering/0.1`, ce qui en fait des engagements publics.
 2. Approcher un collectif (DVP, STIM, CJC canadien) et un fournisseur d'IA pour co-gouverner la méthode. Critère d'abandon : aucun des deux côtés n'accepte un pilote en 3 mois.
 3. Choisir un prestataire de confiance qualifié et un commissaire de justice partenaire. C'est payant.

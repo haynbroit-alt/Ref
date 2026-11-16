@@ -7,6 +7,7 @@ backed by tamper-evident evidence.
 
 > Rapport de recherche et décision GO/NO-GO (FR) : [`docs/RAPPORT.md`](docs/RAPPORT.md)
 > NOVARYS comme tiers neutre éditeurs–IA (leviers légaux, tests, décision) : [`docs/ARBITRE.md`](docs/ARBITRE.md)
+> Dossier de pilote (brouillons non envoyés) : [`docs/pilote/`](docs/pilote/README.md) · Vérification des sources : [`docs/VERIFICATION.md`](docs/VERIFICATION.md)
 
 ## Why
 
@@ -51,7 +52,8 @@ Pure Python ≥ 3.10, no dependencies, works offline.
 pip install -e .
 novarys compile examples/policy-media-fr.json -o out/
 novarys audit --robots out/robots.txt --tdmrep out/.well-known/tdmrep.json --jurisdiction EU,FR,JP
-python -m unittest discover -s tests      # 50 tests, incl. Google's reference suite
+python -m unittest discover -s tests      # 60 tests, incl. Google's reference suite and the pilot rehearsal
+python examples/pilot_demo.py             # end-to-end pilot on synthetic data (6 publishers)
 ```
 
 ## Measured quality
