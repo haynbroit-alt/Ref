@@ -1,0 +1,88 @@
+{
+  "assumptions": {
+    "fair_value_mu": 100.0,
+    "procedure_cost_c_each": 5.0,
+    "risk_neutral_parties": true
+  },
+  "final_offer_arbitration": [
+    {
+      "arbitrator_uncertainty_sigma": 40.0,
+      "provider_offer": 49.87,
+      "publisher_offer": 150.13,
+      "gap_computed": 100.25,
+      "gap_farber_prediction": 100.27,
+      "relative_error_pct": 0.01,
+      "outcome_std_dev": 50.13
+    },
+    {
+      "arbitrator_uncertainty_sigma": 20.0,
+      "provider_offer": 74.94,
+      "publisher_offer": 125.06,
+      "gap_computed": 50.13,
+      "gap_farber_prediction": 50.13,
+      "relative_error_pct": 0.01,
+      "outcome_std_dev": 25.06
+    },
+    {
+      "arbitrator_uncertainty_sigma": 10.0,
+      "provider_offer": 87.47,
+      "publisher_offer": 112.53,
+      "gap_computed": 25.06,
+      "gap_farber_prediction": 25.07,
+      "relative_error_pct": 0.01,
+      "outcome_std_dev": 12.53
+    }
+  ],
+  "divergent_expectations": [
+    {
+      "valuation_error_s_pct_of_value": 60.0,
+      "dispute_probability_analytic": 0.4531,
+      "dispute_probability_monte_carlo": 0.4526,
+      "expected_procedure_cost_per_deal_pct": 4.53
+    },
+    {
+      "valuation_error_s_pct_of_value": 30.0,
+      "dispute_probability_analytic": 0.4068,
+      "dispute_probability_monte_carlo": 0.4074,
+      "expected_procedure_cost_per_deal_pct": 4.07
+    },
+    {
+      "valuation_error_s_pct_of_value": 15.0,
+      "dispute_probability_analytic": 0.3187,
+      "dispute_probability_monte_carlo": 0.3183,
+      "expected_procedure_cost_per_deal_pct": 3.19
+    },
+    {
+      "valuation_error_s_pct_of_value": 7.5,
+      "dispute_probability_analytic": 0.1729,
+      "dispute_probability_monte_carlo": 0.1727,
+      "expected_procedure_cost_per_deal_pct": 1.73
+    }
+  ],
+  "measurement_disagreement_today": {
+    "Anthropic": {
+      "values": {
+        "cloudflare_aug2025": 50000,
+        "tollbit_q1_2025": 8692
+      },
+      "max_over_min": 5.8,
+      "log10_std": 0.38
+    },
+    "OpenAI": {
+      "values": {
+        "cloudflare_aug2025": 887,
+        "tollbit_q1_2025": 179
+      },
+      "max_over_min": 5.0,
+      "log10_std": 0.35
+    },
+    "Perplexity": {
+      "values": {
+        "cloudflare_aug2025": 118,
+        "tollbit_q1_2025": 369
+      },
+      "max_over_min": 3.1,
+      "log10_std": 0.25
+    }
+  }
+}

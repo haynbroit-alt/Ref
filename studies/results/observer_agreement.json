@@ -1,0 +1,92 @@
+{
+  "domains_in_both_scans": 9801,
+  "robots_readable": {
+    "both": 5253,
+    "june_only": 1099,
+    "november_only": 360,
+    "neither": 3089,
+    "agreement_pct": 85.1
+  },
+  "flagged_files_compared": 362,
+  "files_with_at_least_one_agent_disagreement": 93,
+  "per_agent": {
+    "gptbot": {
+      "blocked_both": 63,
+      "blocked_june_only": 6,
+      "blocked_november_only": 14,
+      "open_both": 279,
+      "agreement_pct": 94.5
+    },
+    "oai-searchbot": {
+      "blocked_both": 5,
+      "blocked_june_only": 5,
+      "blocked_november_only": 9,
+      "open_both": 343,
+      "agreement_pct": 96.1
+    },
+    "chatgpt-user": {
+      "blocked_both": 22,
+      "blocked_june_only": 9,
+      "blocked_november_only": 8,
+      "open_both": 323,
+      "agreement_pct": 95.3
+    },
+    "claudebot": {
+      "blocked_both": 77,
+      "blocked_june_only": 6,
+      "blocked_november_only": 29,
+      "open_both": 250,
+      "agreement_pct": 90.3
+    },
+    "anthropic-ai": {
+      "blocked_both": 73,
+      "blocked_june_only": 4,
+      "blocked_november_only": 29,
+      "open_both": 256,
+      "agreement_pct": 90.9
+    },
+    "perplexitybot": {
+      "blocked_both": 51,
+      "blocked_june_only": 12,
+      "blocked_november_only": 17,
+      "open_both": 282,
+      "agreement_pct": 92.0
+    },
+    "bytespider": {
+      "blocked_both": 68,
+      "blocked_june_only": 4,
+      "blocked_november_only": 59,
+      "open_both": 231,
+      "agreement_pct": 82.6
+    },
+    "ccbot": {
+      "blocked_both": 94,
+      "blocked_june_only": 7,
+      "blocked_november_only": 32,
+      "open_both": 229,
+      "agreement_pct": 89.2
+    },
+    "amazonbot": {
+      "blocked_both": 36,
+      "blocked_june_only": 3,
+      "blocked_november_only": 54,
+      "open_both": 269,
+      "agreement_pct": 84.3
+    },
+    "meta-externalagent": {
+      "blocked_both": 38,
+      "blocked_june_only": 7,
+      "blocked_november_only": 56,
+      "open_both": 261,
+      "agreement_pct": 82.6
+    },
+    "cohere-ai": {
+      "blocked_both": 66,
+      "blocked_june_only": 4,
+      "blocked_november_only": 32,
+      "open_both": 260,
+      "agreement_pct": 90.1
+    }
+  },
+  "caveat": "Scans are 5 months apart: disagreement mixes real policy changes, fetch failures and parser differences."
+}
