@@ -1,0 +1,20 @@
+{
+  "snapshot": "crawlora-2026-06-20",
+  "records": 998497,
+  "canonical_bytes_total": 122048104,
+  "canonical_bytes_gzip_estimate": 8837906,
+  "root_sha256": "dbc1d2ec2d1b2edbd04984461243730d347a342413d9975345eae280da3ab4dc",
+  "build_seconds": 7.15,
+  "root_seconds": 0.88,
+  "proof_hashes": 20,
+  "proof_bytes": 640,
+  "proof_ms": 0.041,
+  "verify_ms": 0.011,
+  "all_1000_proofs_verified": true,
+  "tamper_detected": true,
+  "consistency_900k_to_full_verified": true,
+  "consistency_proof_hashes": 16,
+  "consistency_seconds": 0.0,
+  "implementation": "novarys.transparency",
+  "example_record": "{\"blocks\":[],\"domain\":\"sitekeepers.gr\",\"robots\":false,\"snapshot\":\"crawlora-2026-06-20\",\"star_disallow_root\":false}"
+}

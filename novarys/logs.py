@@ -103,7 +103,7 @@ class AgentStats:
     unverifiable: int = 0
     disallowed_fetches: int = 0
     disallowed_fetches_verified: int = 0
-    sample_violations: list[str] = field(default_factory=list)
+    sample_disallowed_fetches: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -165,8 +165,8 @@ def analyse(lines: Iterable[str], robots_for: Callable[[datetime], robots.Robots
                 s.disallowed_fetches += 1
                 if state == "verified":
                     s.disallowed_fetches_verified += 1
-                if len(s.sample_violations) < max_samples:
-                    s.sample_violations.append(f"{h.time.isoformat()} {h.method} {h.path} ({state})")
+                if len(s.sample_disallowed_fetches) < max_samples:
+                    s.sample_disallowed_fetches.append(f"{h.time.isoformat()} {h.method} {h.path} ({state})")
     by_op_crawl: Counter = Counter()
     for s in stats.values():
         if s.purpose in ("training", "ai_answers", "mixed"):
@@ -174,6 +174,6 @@ def analyse(lines: Iterable[str], robots_for: Callable[[datetime], robots.Robots
     ctr = {}
     for op in set(by_op_crawl) | set(refs):
         ctr[op] = round(by_op_crawl[op] / refs[op], 1) if refs[op] else None
-    notes = ["Spoofed requests (claimed AI user agent from an IP outside the vendor's published ranges) are excluded from violation counts.",
+    notes = ["Spoofed requests (claimed AI user agent from an IP outside the vendor's published ranges) are excluded from disallowed-fetch counts.",
              "User-triggered fetchers (ChatGPT-User, Perplexity-User, ...) are documented by some vendors as not bound by robots.txt."]
     return LogReport(n, parsed, stats, dict(refs), ctr, len(versions), notes)

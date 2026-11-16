@@ -1,0 +1,54 @@
+{
+  "n_pairs": 500,
+  "alpha": 0.05,
+  "trials": 400,
+  "scenarios": [
+    {
+      "scenario": "null, no shift",
+      "true_effect_sd": 0.0,
+      "comparison_shift_sd": 0.0,
+      "rejection_rate_preregistered_paired": 0.058,
+      "rejection_rate_naive_unpaired": 0.048
+    },
+    {
+      "scenario": "null, 0.2 SD shift in comparison text",
+      "true_effect_sd": 0.0,
+      "comparison_shift_sd": 0.2,
+      "rejection_rate_preregistered_paired": 0.058,
+      "rejection_rate_naive_unpaired": 0.93
+    },
+    {
+      "scenario": "trained, effect 0.05 SD",
+      "true_effect_sd": 0.05,
+      "comparison_shift_sd": 0.0,
+      "rejection_rate_preregistered_paired": 0.205,
+      "rejection_rate_naive_unpaired": 0.237
+    },
+    {
+      "scenario": "trained, effect 0.1 SD",
+      "true_effect_sd": 0.1,
+      "comparison_shift_sd": 0.0,
+      "rejection_rate_preregistered_paired": 0.455,
+      "rejection_rate_naive_unpaired": 0.44
+    },
+    {
+      "scenario": "trained, effect 0.2 SD",
+      "true_effect_sd": 0.2,
+      "comparison_shift_sd": 0.0,
+      "rejection_rate_preregistered_paired": 0.925,
+      "rejection_rate_naive_unpaired": 0.935
+    }
+  ],
+  "commit_reveal": {
+    "commitment_sha256": "f1c94bae570e20d9985bf5c49cf1aeb28b91d36ac5b291f245b2da7969d1f634",
+    "reveal_verifies": true,
+    "tampered_pair_detected": true,
+    "assignment_example": [
+      0,
+      0,
+      1,
+      0,
+      1
+    ]
+  }
+}

@@ -6,7 +6,7 @@ import json
 import os
 import sys
 
-from . import __version__, audit as audit_mod, compiler, evidence, logs, registry, robots
+from . import __version__, audit as audit_mod, canary, compiler, constat, evidence, logs, metering, registry, robots, transparency
 
 ICON = {"critical": "!!", "high": "! ", "medium": "~ ", "low": "- ", "info": "i "}
 
@@ -104,7 +104,7 @@ def cmd_logs(a) -> int:
     print(f"{'agent':22} {'req':>7} {'verified':>8} {'spoofed':>7} {'unverif':>7} {'disallowed':>10}")
     for tok, s in d["agents"].items():
         print(f"{tok:22} {s['requests']:7d} {s['verified']:8d} {s['spoofed']:7d} {s['unverifiable']:7d} {s['disallowed_fetches']:10d}")
-        for v in s["sample_violations"]:
+        for v in s["sample_disallowed_fetches"]:
             print(f"    {v}")
     print("AI referrals:", d["referrals"])
     print("crawl-to-referral ratio:", d["crawl_to_referral"])
@@ -133,6 +133,128 @@ def cmd_evidence(a) -> int:
     elif a.action == "list":
         for e in led.entries():
             print(f"#{e.seq} {e.ts} {e.kind:9} {e.url} {e.sha256[:16]}")
+    return 0
+
+
+def _write_json(obj, path):
+    text = json.dumps(obj, indent=2, ensure_ascii=False)
+    if path:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+        print(f"wrote {path}")
+    else:
+        print(text)
+
+
+def cmd_tlog(a) -> int:
+    log = transparency.Log(a.dir)
+    if a.action == "append":
+        idx = log.append(json.loads(a.record))
+        print(f"appended #{idx}; head {log.head().to_dict()}")
+    elif a.action == "head":
+        h = log.head()
+        print(json.dumps({**h.to_dict(), "tree_head_sha256": h.digest()}, indent=2))
+    elif a.action == "prove":
+        _write_json(log.prove(a.index), a.out)
+    elif a.action == "consistency":
+        _write_json(log.prove_consistency(a.index), a.out)
+    elif a.action == "tsq":
+        h = log.head()
+        with open(a.out or "tree-head.tsq", "wb") as fh:
+            fh.write(evidence.timestamp_request(h.digest()))
+        print(f"RFC 3161 request for tree head {h.digest()} (size {h.size}) written to {a.out or 'tree-head.tsq'}")
+    return 0
+
+
+def cmd_check(a) -> int:
+    with open(a.proof, encoding="utf-8") as fh:
+        p = json.load(fh)
+    ok = transparency.check_consistency(p) if "old_size" in p else transparency.check_inclusion(p)
+    print("VALID" if ok else "INVALID")
+    return 0 if ok else 4
+
+
+def cmd_snapshot(a) -> int:
+    led = evidence.Ledger(a.ledger)
+    with open(a.file, "rb") as fh:
+        content = fh.read()
+    e = led.add(a.url, content, kind=a.kind)
+    print(f"ledger #{e.seq} {e.ts} sha256={e.sha256}")
+    if a.tlog:
+        idx = transparency.Log(a.tlog).append({"type": "signal-snapshot", "url": a.url, "kind": a.kind,
+                                               "recorded_at": e.ts, "content_sha256": e.sha256})
+        print(f"public commitment #{idx} in {a.tlog}")
+    return 0
+
+
+def cmd_constat(a) -> int:
+    logs_report = None
+    if a.logs_json:
+        with open(a.logs_json, encoding="utf-8") as fh:
+            logs_report = json.load(fh)
+    rep = constat.build(a.ledger, a.url, a.as_of, [j.strip() for j in a.jurisdiction.split(",") if j.strip()],
+                        logs_report, a.tlog, a.requested_by)
+    bad = constat.neutral_wording(rep)
+    if bad:
+        print("refusing to emit a non-neutral report:", bad)
+        return 5
+    _write_json(rep, a.out)
+    if a.md:
+        with open(a.md, "w", encoding="utf-8") as fh:
+            fh.write(constat.to_markdown(rep))
+        print(f"wrote {a.md}")
+    print(f"report sha256: {rep['report_sha256']}")
+    return 0
+
+
+def cmd_constat_verify(a) -> int:
+    with open(a.report, encoding="utf-8") as fh:
+        rep = json.load(fh)
+    ok = constat.verify(rep)
+    print("VALID" if ok else "INVALID (body was modified)")
+    return 0 if ok else 4
+
+
+def cmd_meter(a) -> int:
+    if a.action == "report":
+        with open(a.inputs[0], encoding="utf-8") as fh:
+            lr = json.load(fh)
+        _write_json(metering.publisher_report(lr, a.publisher, a.period), a.out)
+    elif a.action == "commit":
+        with open(a.inputs[0], encoding="utf-8") as fh:
+            rep = json.load(fh)
+        _write_json(metering.commit_report(rep, transparency.Log(a.tlog)), a.out)
+    elif a.action == "aggregate":
+        reps = []
+        for path in a.inputs:
+            with open(path, encoding="utf-8") as fh:
+                reps.append(json.load(fh))
+        _write_json(metering.aggregate(reps, a.k), a.out)
+    return 0
+
+
+def cmd_canary(a) -> int:
+    if a.action == "create":
+        d = canary.create(a.n)
+        with open(a.secret, "w", encoding="utf-8") as fh:
+            json.dump(d["secret"], fh)
+        print(f"secret design (keep private) written to {a.secret}")
+        if a.tlog:
+            idx = transparency.Log(a.tlog).append(d["commitment"])
+            print(f"commitment #{idx} appended to {a.tlog}")
+        _write_json({"commitment": d["commitment"], "publish_these": d["published"]}, a.out)
+    else:
+        with open(a.secret, encoding="utf-8") as fh:
+            secret = json.load(fh)
+        if a.action == "verify":
+            with open(a.inputs[0], encoding="utf-8") as fh:
+                com = json.load(fh)
+            ok = canary.verify_reveal(secret, com.get("commitment", com))
+            print("VALID" if ok else "INVALID")
+            return 0 if ok else 4
+        with open(a.inputs[0], encoding="utf-8") as fh:
+            scores = json.load(fh)
+        _write_json(canary.test(secret, scores), a.out)
     return 0
 
 
@@ -179,6 +301,33 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("action", choices=["add", "verify", "tsq", "list"]); s.add_argument("dir")
     s.add_argument("--url"); s.add_argument("--file"); s.add_argument("--kind", default="snapshot"); s.add_argument("-o", "--out", default="head.tsq")
     s.set_defaults(fn=cmd_evidence)
+
+    s = sub.add_parser("tlog", help="public append-only transparency log (RFC 9162)")
+    s.add_argument("action", choices=["append", "head", "prove", "consistency", "tsq"]); s.add_argument("dir")
+    s.add_argument("--record", help="JSON record to append"); s.add_argument("--index", type=int, default=0, help="leaf index (prove) or old size (consistency)")
+    s.add_argument("-o", "--out"); s.set_defaults(fn=cmd_tlog)
+
+    s = sub.add_parser("check", help="verify an inclusion or consistency proof file offline"); s.add_argument("proof"); s.set_defaults(fn=cmd_check)
+
+    s = sub.add_parser("snapshot", help="record a published signal file in the evidence ledger (+ public commitment)")
+    s.add_argument("ledger"); s.add_argument("--url", required=True); s.add_argument("--file", required=True)
+    s.add_argument("--kind", default="robots.txt"); s.add_argument("--tlog"); s.set_defaults(fn=cmd_snapshot)
+
+    s = sub.add_parser("constat", help="neutral, deterministic technical report at a date")
+    s.add_argument("ledger"); s.add_argument("--url", required=True); s.add_argument("--as-of", required=True)
+    s.add_argument("--jurisdiction", default=""); s.add_argument("--logs-json"); s.add_argument("--tlog")
+    s.add_argument("--requested-by"); s.add_argument("-o", "--out"); s.add_argument("--md"); s.set_defaults(fn=cmd_constat)
+
+    s = sub.add_parser("constat-verify", help="check a constat's hash"); s.add_argument("report"); s.set_defaults(fn=cmd_constat_verify)
+
+    s = sub.add_parser("meter", help="neutral usage metering (per publisher, committed, k-anonymous aggregate)")
+    s.add_argument("action", choices=["report", "commit", "aggregate"]); s.add_argument("inputs", nargs="+")
+    s.add_argument("--publisher"); s.add_argument("--period"); s.add_argument("--tlog"); s.add_argument("--k", type=int, default=metering.K_MIN)
+    s.add_argument("-o", "--out"); s.set_defaults(fn=cmd_meter)
+
+    s = sub.add_parser("canary", help="pre-registered canaries with an exact paired test")
+    s.add_argument("action", choices=["create", "verify", "test"]); s.add_argument("secret"); s.add_argument("inputs", nargs="*")
+    s.add_argument("-n", type=int, default=200); s.add_argument("--tlog"); s.add_argument("-o", "--out"); s.set_defaults(fn=cmd_canary)
 
     s = sub.add_parser("registry", help="list known AI/search agents"); s.add_argument("--purpose"); s.set_defaults(fn=cmd_registry)
     s = sub.add_parser("markets", help="list the legal knowledge base"); s.set_defaults(fn=cmd_markets)
