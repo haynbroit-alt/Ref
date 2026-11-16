@@ -81,7 +81,13 @@ def cmd_logs(a) -> int:
         tok, path = spec.split("=", 1)
         ranges[tok] = logs.load_ranges(path)
     if a.ledger:
+        if not a.url:
+            print("--url is required with --ledger (the URL used in `novarys snapshot`)")
+            return 2
         led = evidence.Ledger(a.ledger)
+        if not any(e.url == a.url for e in led.entries()):
+            print(f"no snapshot of {a.url} in {a.ledger}: disallowed fetches cannot be assessed")
+            return 2
         cache: dict[str, robots.RobotsTxt] = {}
 
         def robots_for(t):
@@ -101,9 +107,9 @@ def cmd_logs(a) -> int:
         print(json.dumps(d, indent=2, default=str))
         return 0
     print(f"{d['parsed']}/{d['lines']} lines parsed")
-    print(f"{'agent':22} {'req':>7} {'verified':>8} {'spoofed':>7} {'unverif':>7} {'disallowed':>10}")
+    print(f"{'agent':22} {'req':>7} {'verified':>8} {'spoofed':>7} {'unverif':>7} {'disallowed':>10} {'not_assessable':>14}")
     for tok, s in d["agents"].items():
-        print(f"{tok:22} {s['requests']:7d} {s['verified']:8d} {s['spoofed']:7d} {s['unverifiable']:7d} {s['disallowed_fetches']:10d}")
+        print(f"{tok:22} {s['requests']:7d} {s['verified']:8d} {s['spoofed']:7d} {s['unverifiable']:7d} {s['disallowed_fetches']:10d} {s['not_assessable']:14d}")
         for v in s["sample_disallowed_fetches"]:
             print(f"    {v}")
     print("AI referrals:", d["referrals"])
@@ -293,7 +299,7 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("policy"); s.add_argument("robots"); s.set_defaults(fn=cmd_verify)
 
     s = sub.add_parser("logs", help="analyse access logs for AI agents, compliance and referrals")
-    s.add_argument("log"); s.add_argument("--robots"); s.add_argument("--ledger"); s.add_argument("--url", default="/robots.txt")
+    s.add_argument("log"); s.add_argument("--robots"); s.add_argument("--ledger"); s.add_argument("--url", help="URL under which robots.txt snapshots were recorded (required with --ledger)")
     s.add_argument("--ranges", action="append", help="TOKEN=ip-ranges.json (repeatable)"); s.add_argument("--json", action="store_true")
     s.set_defaults(fn=cmd_logs)
 

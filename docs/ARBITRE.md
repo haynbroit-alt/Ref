@@ -19,7 +19,7 @@
 - le CRTC canadien, qui peut acheter une « assistance technique » (*Online News Act*, art. 36) ;
 - l'AI Office, qui envoie ses premières demandes d'information depuis août 2026 (R) ;
 - les sociétés de gestion (STIM impose déjà une attribution par un tiers neutre, R) ;
-- les juges. L'OLG Hamburg met à la charge de l'ayant droit la preuve que sa réserve était lisible par machine *au moment de l'usage* (Kneschke c. LAION, 10 déc. 2025, R).
+- les juges. Dans Kneschke c. LAION (OLG Hamburg, 10 déc. 2025), la réserve a été jugée, selon la dépêche dpa, « nicht nachweislich maschinenlesbar » (pas démontrablement lisible par machine), donc inopérante (R). La preuve datée de la lisibilité est décisive. *Correction : aucune source vérifiée n'énonce explicitement la règle de charge de la preuve que j'avais d'abord indiquée.*
 
 **Décision : GO sur 4 briques neutres**, construites, testées et poussées. **NO-GO sur 5 autres**, faute de preuves ou par incompatibilité avec la neutralité (§ 4).
 
@@ -54,8 +54,8 @@ Deux défauts réels ont été trouvés et corrigés grâce aux tests :
 
 | Levier | Juridique | Technique | Commercial | Économique | Décision |
 |---|---|---|---|---|---|
-| **A. Journal public de transparence des réserves** | Kneschke (charge de la preuve « au moment de l'usage ») ; AI Act 53(1)(c) (« technologies de pointe ») ; Rb Amsterdam 2024 ; eIDAS art. 41 (horodatage non qualifié recevable, présomption si qualifié) ; résolution PE du 10 mars 2026 et étude Commission du 13 juil. 2026 sur un registre européen (R, pas d'engagement) | Prouvé (§ 1) | Indirect : observateurs en désaccord (14,9 %), réserves changeantes (26 %). Concurrents : Liccium TDM·AI (ISCC, sur la liste de consultation de la Commission), Spawning (seul registre consulté par un fournisseur, Stability) | Coût quasi nul | **GO** |
-| **B. Constat technique neutre** | Preuve libre entre commerçants (C. com. L.110-3, U) ; écrit électronique (C. civ. 1366, U) ; rapport factuel autorisé, conseil personnalisé interdit (loi 71-1130) | Prouvé : déterministe, même empreinte quel que soit le demandeur, vérifiable | Besoin créé par Kneschke, la mesure 1.5 du code GPAI (contact et plaintes, R/U), l'art. L.218-4 CPI (transparence) et la loi droits voisins 2026 (CMP du 4 nov. 2026, R) | Coût marginal nul | **GO** |
+| **A. Journal public de transparence des réserves** | Kneschke (réserve « pas démontrablement lisible par machine », R) ; AI Act 53(1)(c) (« technologies de pointe ») ; Rb Amsterdam 2024 (lecture des commentateurs, appel pendant) ; eIDAS art. 41 (horodatage non qualifié recevable, présomption si qualifié) ; résolution PE du 10 mars 2026 et étude Commission du 13 juil. 2026 sur un registre européen (R, pas d'engagement) | Prouvé (§ 1) | Indirect : observateurs en désaccord (14,9 %), réserves changeantes (26 %). Concurrents : Liccium TDM·AI (ISCC, sur la liste de consultation de la Commission), Spawning (seul registre consulté par un fournisseur, Stability) | Coût quasi nul | **GO** |
+| **B. Constat technique neutre** | Preuve libre entre commerçants (C. com. L.110-3, U) ; écrit électronique (C. civ. 1366, U) ; rapport factuel autorisé, conseil personnalisé interdit (loi 71-1130) | Prouvé : déterministe, même empreinte quel que soit le demandeur, vérifiable | Besoin illustré par Kneschke, la mesure 1.5 du code GPAI (contact et plaintes, R/U), l'art. L.218-4 CPI (transparence) et la loi droits voisins 2026 (CMP du 4 nov. 2026, R) | Coût marginal nul | **GO** |
 | **C. Mesure d'usage neutre et agrégée** | Canada art. 36/38/86 ; Australie, taxe NBI en vigueur depuis le 27 août 2026 (vérification des compensations, R/V) ; Indonésie Perpres 32/2024 art. 7(3) (V) ; STIM (attribution tierce obligatoire, R). Pas d'échange de prix (art. 101 TFUE) | Métriques calculées depuis les logs ; agrégat k-anonyme (k ≥ 5) ; engagement par empreinte | Aucun organisme n'accrédite aujourd'hui la mesure des usages IA (MRC, Médiamétrie, ACPM : niche ouverte, R) | Valeur = coûts de litige évités (≈ 2,8 points de valeur de contrat dans la simulation) | **GO** (méthode v0.1) |
 | **D. Pré-enregistrement de canaris** | Contenu propre ; seule la reproduction a été acceptée en justice (GEMA, LG München I, 11 nov. 2025) ; aucun tribunal n'a encore accepté de statistiques d'appartenance aux données d'entraînement | Propriété statistique prouvée ; détection réelle dépendante de l'accès au modèle (log-probabilités ou poids) | Aucun service neutre de ce type identifié | Coût quasi nul | **GO limité** (outil de preuve, pas de promesse de détection) |
 | E. Être arbitre | Interdit à une personne morale (CPC 1450) | — | — | — | **NO-GO** |
@@ -100,7 +100,7 @@ Tout est déterministe, sans apprentissage automatique, et se vérifie hors lign
 
 | Payeur | Service | Justification |
 |---|---|---|
-| Éditeur | Instantanés horodatés + constats | Charge de la preuve après Kneschke. Prix indicatif : 49 €/mois et par site (offre Pro existante) |
+| Éditeur | Instantanés horodatés + constats | Prouver une réserve lisible à la date de l'usage (Kneschke). Prix indicatif : 49 €/mois et par site (offre Pro existante) |
 | Fournisseur d'IA | Consultation du journal avec preuves, pour documenter la mesure 1.3 du code GPAI et l'art. 53(1)(c) | Demandes d'information de l'AI Office depuis août 2026 ; amendes jusqu'à 3 % (art. 101, V) |
 | Société de gestion, collectif, régulateur | Mesure d'usage (rapports, agrégats) et assistance technique | Modèle STIM ; Canada art. 36 ; Australie NBI ; Inde (organisme collecteur CRCAT, si adopté) |
 | Arbitres et médiateurs (plus tard) | Dossiers de preuve communs aux deux parties | Simulation : l'information partagée réduit écart d'offres et litiges |
@@ -131,6 +131,8 @@ C'est un calcul de modèle : **aucun acheteur n'a confirmé**, et aucun contact 
 - La formule de mesure doit être acceptée par les deux côtés pour valoir « monnaie commune ».
 
 ## 9. Ce qui exige votre autorisation
+
+Le dossier de pilote est prêt en brouillon, non envoyé, dans [`docs/pilote/`](pilote/README.md) : proposition, méthode normative, charte de gouvernance, données, mode d'emploi répété par `examples/pilot_demo.py`, et projets de messages.
 
 1. Publier le journal et la méthode `novarys-metering/0.1`, ce qui en fait des engagements publics.
 2. Approcher un collectif (DVP, STIM, CJC canadien) et un fournisseur d'IA pour co-gouverner la méthode. Critère d'abandon : aucun des deux côtés n'accepte un pilote en 3 mois.

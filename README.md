@@ -7,6 +7,7 @@ backed by tamper-evident evidence.
 
 > Rapport de recherche et décision GO/NO-GO (FR) : [`docs/RAPPORT.md`](docs/RAPPORT.md)
 > NOVARYS comme tiers neutre éditeurs–IA (leviers légaux, tests, décision) : [`docs/ARBITRE.md`](docs/ARBITRE.md)
+> Dossier de pilote (brouillons non envoyés) : [`docs/pilote/`](docs/pilote/README.md) · Vérification des sources : [`docs/VERIFICATION.md`](docs/VERIFICATION.md)
 
 ## Why
 
@@ -19,8 +20,10 @@ Measured on real data (see `studies/`):
   versus 35.2 % for `.com`.
 - 2,138 sites block only Anthropic's legacy tokens (`anthropic-ai`, `claude-web`)
   and not `ClaudeBot`.
-- A Dutch court held that a robots.txt naming specific AI bots is not a general
-  reservation against other bots (Rb Amsterdam, 30 Oct 2024, ECLI:NL:RBAMS:2024:6563).
+- In a Dutch case where robots.txt named only some AI bots, the scraper was found
+  not to be effectively excluded; commentators read the ruling as requiring the
+  opt-out to target the bots concerned (Rb Amsterdam, 30 Oct 2024,
+  ECLI:NL:RBAMS:2024:6563; appeal reported pending).
 - On 385 robots.txt files of top-10k sites, the three parsers used by real
   crawlers (Google/RFC 9309 semantics, Python `urllib`, Scrapy's Protego)
   disagree on whether a major AI agent may fetch the site root in 31 files.
@@ -49,7 +52,8 @@ Pure Python ≥ 3.10, no dependencies, works offline.
 pip install -e .
 novarys compile examples/policy-media-fr.json -o out/
 novarys audit --robots out/robots.txt --tdmrep out/.well-known/tdmrep.json --jurisdiction EU,FR,JP
-python -m unittest discover -s tests      # 50 tests, incl. Google's reference suite
+python -m unittest discover -s tests      # 60 tests, incl. Google's reference suite and the pilot rehearsal
+python examples/pilot_demo.py             # end-to-end pilot on synthetic data (6 publishers)
 ```
 
 ## Measured quality

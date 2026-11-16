@@ -138,7 +138,8 @@ def to_markdown(report: dict) -> str:
         lines += ["", "## Activité des robots (journaux fournis)"]
         for tok, s in b["crawler_activity"].get("agents", {}).items():
             lines.append(f"- {tok} : {s['requests']} requêtes, {s['verified']} vérifiées, {s['spoofed']} usurpées, "
-                         f"{s['disallowed_fetches']} accès à des chemins exclus à la date de la requête")
+                         f"{s['disallowed_fetches']} accès à des chemins exclus à la date de la requête, "
+                         f"{s.get('not_assessable', 0)} non évaluables (aucun instantané en vigueur)")
     if "applicable_framework_for_reference" in b:
         lines += ["", "## Dispositions applicables (pour référence, sans conclusion juridique)"]
         for j in b["applicable_framework_for_reference"]:
