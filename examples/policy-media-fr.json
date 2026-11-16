@@ -1,0 +1,14 @@
+{
+  "site": "https://www.exemple-media.fr",
+  "rightsholder": "Exemple Média SAS",
+  "contact": "licences@exemple-media.fr",
+  "jurisdictions": ["EU", "FR", "UK", "US", "JP"],
+  "purposes": {"search": "allow", "ai_answers": "allow", "user_fetch": "allow", "training": "deny"},
+  "disallow_all_bots": ["/admin/", "/panier/"],
+  "paths": [
+    {"path": "/premium/", "ai_answers": "deny", "user_fetch": "deny", "snippet": "max-snippet:50"}
+  ],
+  "license_url": "https://www.exemple-media.fr/license.xml",
+  "terms_url": "https://www.exemple-media.fr/cgu",
+  "sitemaps": ["https://www.exemple-media.fr/sitemap.xml"]
+}

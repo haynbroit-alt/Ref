@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "novarys-omnisearch"
+version = "0.1.0"
+description = "AI visibility & content-rights compliance engine: compile, audit, prove and monitor how AI systems may use a website."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+novarys = "novarys.cli:main"
+
+[tool.setuptools]
+packages = ["novarys"]
+
+[tool.setuptools.package-data]
+novarys = ["data/*.json"]

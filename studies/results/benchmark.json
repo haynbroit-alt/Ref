@@ -1,0 +1,63 @@
+{
+  "parsers": [
+    "novarys",
+    "python-urllib",
+    "protego (Scrapy)"
+  ],
+  "google_conformance": {
+    "novarys": {
+      "passed": 142,
+      "total": 142,
+      "rate": 100.0
+    },
+    "python-urllib": {
+      "passed": 128,
+      "total": 142,
+      "rate": 90.1
+    },
+    "protego (Scrapy)": {
+      "passed": 130,
+      "total": 142,
+      "rate": 91.5
+    }
+  },
+  "real_files": {
+    "files": 385,
+    "files_where_parsers_disagree_on_root_access_for_an_AI_agent": 31,
+    "root_disagreements_by_agent": {
+      "Applebot-Extended": 21,
+      "CCBot": 6,
+      "ClaudeBot": 2,
+      "Amazonbot": 2,
+      "Google-Extended": 2,
+      "Claude-SearchBot": 1,
+      "Claude-User": 1,
+      "GPTBot": 1,
+      "meta-externalagent": 1,
+      "Bytespider": 1
+    },
+    "files_where_parser_disagrees_with_novarys_on_some_path": {
+      "protego (Scrapy)": 116,
+      "python-urllib": 146
+    },
+    "novarys_findings_files_per_code": {
+      "WILDCARD_ESCAPE": 328,
+      "NO_TDMREP": 168,
+      "NO_USAGE_TOKEN": 167,
+      "TRAINING_PARTIAL": 140,
+      "NAMED_BOTS_ONLY": 112,
+      "AI_ANSWERS_BLOCKED": 106,
+      "GOOGLE_EXTENDED_SCOPE": 94,
+      "USER_FETCH_NOT_ENFORCED": 93,
+      "PARSER_DIVERGENCE": 65,
+      "AMBIGUOUS_GROUPS": 50,
+      "OBSOLETE_TOKEN": 11,
+      "SIGNAL_NOT_HONOURED": 2,
+      "SEARCH_BLOCKED": 1
+    },
+    "files_with_high_or_critical_finding": 162,
+    "training_optout_files_scored": 168,
+    "reservation_score_median": 60,
+    "reservation_score_ge_80": 27
+  }
+}

@@ -1,0 +1,974 @@
+[
+ {
+  "test": "GoogleOnly_SystemTest",
+  "cases": [
+   {
+    "robots": "",
+    "agent": "FooBot",
+    "url": "",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\n",
+    "agent": "",
+    "url": "",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "",
+    "expected": false
+   },
+   {
+    "robots": "",
+    "agent": "",
+    "url": "",
+    "expected": true
+   }
+  ],
+  "asserts_total": 4
+ },
+ {
+  "test": "ID_LineSyntax_Line",
+  "cases": [
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": false
+   },
+   {
+    "robots": "foo: FooBot\nbar: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "user-agent FooBot\ndisallow /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": false
+   }
+  ],
+  "asserts_total": 3
+ },
+ {
+  "test": "ID_LineSyntax_Groups",
+  "cases": [
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/b",
+    "expected": true
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/z/d",
+    "expected": true
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/y/c",
+    "expected": false
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/y/c",
+    "expected": true
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/w/a",
+    "expected": true
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/z/d",
+    "expected": false
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BazBot",
+    "url": "http://foo.bar/z/d",
+    "expected": true
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/",
+    "expected": false
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/foo/bar/",
+    "expected": false
+   },
+   {
+    "robots": "allow: /foo/bar/\n\nuser-agent: FooBot\ndisallow: /\nallow: /x/\nuser-agent: BarBot\ndisallow: /\nallow: /y/\n\n\nallow: /w/\nuser-agent: BazBot\n\nuser-agent: FooBot\nallow: /z/\ndisallow: /\n",
+    "agent": "BazBot",
+    "url": "http://foo.bar/foo/bar/",
+    "expected": false
+   }
+  ],
+  "asserts_total": 10
+ },
+ {
+  "test": "ID_LineSyntax_Groups_OtherRules",
+  "cases": [
+   {
+    "robots": "User-agent: BarBot\nSitemap: https://foo.bar/sitemap\nUser-agent: *\nDisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: BarBot\nSitemap: https://foo.bar/sitemap\nUser-agent: *\nDisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nInvalid-Unknown-Line: unknown\nUser-agent: *\nDisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nInvalid-Unknown-Line: unknown\nUser-agent: *\nDisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/",
+    "expected": false
+   }
+  ],
+  "asserts_total": 4
+ },
+ {
+  "test": "ID_REPLineNamesCaseInsensitive",
+  "cases": [
+   {
+    "robots": "USER-AGENT: FooBot\nALLOW: /x/\nDISALLOW: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "uSeR-aGeNt: FooBot\nAlLoW: /x/\ndIsAlLoW: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "USER-AGENT: FooBot\nALLOW: /x/\nDISALLOW: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "uSeR-aGeNt: FooBot\nAlLoW: /x/\ndIsAlLoW: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   }
+  ],
+  "asserts_total": 6
+ },
+ {
+  "test": "ID_VerifyValidUserAgentsToObey",
+  "cases": [],
+  "asserts_total": 0
+ },
+ {
+  "test": "ID_UserAgentValueCaseInsensitive",
+  "cases": [
+   {
+    "robots": "User-Agent: FOO BAR\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: foo bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: FoO bAr\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: FOO BAR\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: foo bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: FoO bAr\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: FOO BAR\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: foo bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: FoO bAr\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: FOO BAR\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: foo bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: FoO bAr\nAllow: /x/\nDisallow: /\n",
+    "agent": "foo",
+    "url": "http://foo.bar/a/b",
+    "expected": false
+   }
+  ],
+  "asserts_total": 12
+ },
+ {
+  "test": "GoogleOnly_AcceptUserAgentUpToFirstSpace",
+  "cases": [
+   {
+    "robots": "User-Agent: *\nDisallow: /\nUser-Agent: Foo Bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: *\nDisallow: /\nUser-Agent: Foo Bar\nAllow: /x/\nDisallow: /\n",
+    "agent": "Foo Bar",
+    "url": "http://foo.bar/x/y",
+    "expected": false
+   }
+  ],
+  "asserts_total": 2
+ },
+ {
+  "test": "ID_GlobalGroups_Secondary",
+  "cases": [
+   {
+    "robots": "",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: *\nallow: /\nuser-agent: FooBot\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: *\nallow: /\nuser-agent: FooBot\ndisallow: /\n",
+    "agent": "BarBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /\nuser-agent: BarBot\ndisallow: /\nuser-agent: BazBot\ndisallow: /\n",
+    "agent": "QuxBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   }
+  ],
+  "asserts_total": 4
+ },
+ {
+  "test": "ID_AllowDisallow_Value_CaseSensitive",
+  "cases": [
+   {
+    "robots": "user-agent: FooBot\ndisallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /X/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y",
+    "expected": true
+   }
+  ],
+  "asserts_total": 2
+ },
+ {
+  "test": "ID_LongestMatch",
+  "cases": [
+   {
+    "robots": "user-agent: FooBot\ndisallow: /x/page.html\nallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/page.html\ndisallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/page.html\ndisallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: \nallow: \n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /x\nallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /x\nallow: /x/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /x/page.html\nallow: /x/page.html\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /page\ndisallow: /*.html\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/page.html",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /page\ndisallow: /*.html\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/page",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/page.\ndisallow: /*.html\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /x/page.\ndisallow: /*.html\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/y.html",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: *\nDisallow: /x/\nUser-agent: FooBot\nDisallow: /y/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/x/page",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: *\nDisallow: /x/\nUser-agent: FooBot\nDisallow: /y/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/y/page",
+    "expected": false
+   }
+  ],
+  "asserts_total": 14
+ },
+ {
+  "test": "ID_Encoding",
+  "cases": [
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar?qux=taz&baz=http://foo.bar?tar&par\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar?qux=taz&baz=http://foo.bar?tar&par",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/\u30c4\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/%E3%83%84",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/\u30c4\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/\u30c4",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/%E3%83%84\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/%E3%83%84",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/%E3%83%84\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/\u30c4",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/%62%61%7A\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/baz",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /\nAllow: /foo/bar/%62%61%7A\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/%62%61%7A",
+    "expected": true
+   }
+  ],
+  "asserts_total": 7
+ },
+ {
+  "test": "ID_SpecialCharacters",
+  "cases": [
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar/quz\nAllow: /foo/*/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/quz",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar/quz\nAllow: /foo/*/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/quz",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar/quz\nAllow: /foo/*/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo//quz",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar/quz\nAllow: /foo/*/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bax/quz",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar$\nAllow: /foo/bar/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar",
+    "expected": false
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar$\nAllow: /foo/bar/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/qux",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar$\nAllow: /foo/bar/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\nDisallow: /foo/bar$\nAllow: /foo/bar/qux\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar/baz",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\n# Disallow: /\nDisallow: /foo/quz#qux\nAllow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/bar",
+    "expected": true
+   },
+   {
+    "robots": "User-agent: FooBot\n# Disallow: /\nDisallow: /foo/quz#qux\nAllow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/foo/quz",
+    "expected": false
+   }
+  ],
+  "asserts_total": 10
+ },
+ {
+  "test": "GoogleOnly_IndexHTMLisDirectory",
+  "cases": [
+   {
+    "robots": "User-Agent: *\nAllow: /allowed-slash/index.html\nDisallow: /\n",
+    "agent": "foobot",
+    "url": "http://foo.com/allowed-slash/",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: *\nAllow: /allowed-slash/index.html\nDisallow: /\n",
+    "agent": "foobot",
+    "url": "http://foo.com/allowed-slash/index.htm",
+    "expected": false
+   },
+   {
+    "robots": "User-Agent: *\nAllow: /allowed-slash/index.html\nDisallow: /\n",
+    "agent": "foobot",
+    "url": "http://foo.com/allowed-slash/index.html",
+    "expected": true
+   },
+   {
+    "robots": "User-Agent: *\nAllow: /allowed-slash/index.html\nDisallow: /\n",
+    "agent": "foobot",
+    "url": "http://foo.com/anyother-url",
+    "expected": false
+   }
+  ],
+  "asserts_total": 4
+ },
+ {
+  "test": "GoogleOnly_LineTooLong",
+  "cases": [
+   {
+    "robots": "user-agent: FooBot\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fux",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/",
+    "expected": false
+   }
+  ],
+  "asserts_total": 5
+ },
+ {
+  "test": "GoogleOnly_DocumentationChecks",
+  "cases": [
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/salmon.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fishheads",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fishheads/yummy.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.html?id=anything",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/Fish.asp",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/catfish",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/?id=fish",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/salmon.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fishheads",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fishheads/yummy.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.html?id=anything",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/Fish.bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/catfish",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/?id=fish",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/salmon",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/?salmon",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/salmon.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish/?id=anything",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.html",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish/\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/Fish/Salmon.html",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/folder/filename.php",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/folder/filename.php?parameters",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar//folder/any.php.file.html",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php/",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/index?f=filename.php/",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/php/",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/index?php",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/windows.PHP",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/folder/filename.php",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php?parameters",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php/",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename.php5",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/php/",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/filename?php",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/aaaphpaaa",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /*.php$\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar//windows.PHP",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/bar",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fish.php",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/fishheads/catfish.php?parameters",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\ndisallow: /\nallow: /fish*.php\n",
+    "agent": "FooBot",
+    "url": "http://foo.bar/Fish.PHP",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /p\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://example.com/page",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /folder\ndisallow: /folder\n",
+    "agent": "FooBot",
+    "url": "http://example.com/folder/page",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /page\ndisallow: /*.htm\n",
+    "agent": "FooBot",
+    "url": "http://example.com/page.htm",
+    "expected": false
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /$\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://example.com/",
+    "expected": true
+   },
+   {
+    "robots": "user-agent: FooBot\nallow: /$\ndisallow: /\n",
+    "agent": "FooBot",
+    "url": "http://example.com/page.html",
+    "expected": false
+   }
+  ],
+  "asserts_total": 58
+ },
+ {
+  "test": "ID_LinesNumbersAreCountedCorrectly",
+  "cases": [],
+  "asserts_total": 0
+ },
+ {
+  "test": "ID_UTF8ByteOrderMarkIsSkipped",
+  "cases": [],
+  "asserts_total": 0
+ },
+ {
+  "test": "ID_NonStandardLineExample_Sitemap",
+  "cases": [],
+  "asserts_total": 0
+ },
+ {
+  "test": "TestGetPathParamsQuery",
+  "cases": [],
+  "asserts_total": 0
+ },
+ {
+  "test": "TestMaybeEscapePattern",
+  "cases": [],
+  "asserts_total": 0
+ }
+]
