@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-16",
+  "version": "2026-11-17",
   "disclaimer": "Research aid, not legal advice. Items marked 'reported' come from secondary summaries; 'unresearched' markets need local counsel.",
   "regimes": {
     "eu-optout": "Commercial TDM allowed unless the rightsholder reserved it 'in an appropriate manner, such as machine-readable means' (DSM Directive 2019/790 Art. 4(3)); GPAI providers must honour reservations (AI Act Art. 53(1)(c)).",
@@ -10,73 +10,299 @@
     "unresearched": "Not researched; legal review needed."
   },
   "markets": {
-    "EU": {"name": "European Union (baseline)", "regime": "eu-optout", "opt_out": true, "machine_readable": true,
+    "EU": {
+      "name": "European Union (baseline)",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
       "law": "DSM Directive 2019/790 Art. 4(3); AI Act Art. 53(1)(c) (fines from 2 Aug 2026); GPAI Code of Practice copyright chapter, Measure 1.3 (robots.txt per RFC 9309 mandatory, other protocols best-effort)",
       "named_bot_risk": "In a Dutch case where the robots.txt named only some AI bots, the court found the scraper was not effectively excluded; commentators read it as requiring the opt-out to target the bots concerned (Rb Amsterdam, 30 Oct 2024, ECLI:NL:RBAMS:2024:6563; appeal reported pending).",
       "labelling": "AI Act Art. 50(4): deployers disclose deepfakes and AI-generated text on matters of public interest unless human-reviewed under editorial responsibility; applies 2 Aug 2026.",
-      "sources": ["https://eur-lex.europa.eu/eli/dir/2019/790/oj", "https://eur-lex.europa.eu/eli/reg/2024/1689/oj", "https://cms.law/en/gbr/publication/artificial-intelligence-and-copyright-case-tracker/The-Netherlands-DPG-Media-B.V.-Mediahuis-Nederland-B.V.-Mediahuis-NRC-B.V.-v-Knowledge-Exchange-B.V.-trading-as-Howards-Home-30-October-2024"],
-      "status": "reported"},
-    "DE": {"name": "Germany", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU",
+      "sources": [
+        "https://eur-lex.europa.eu/eli/dir/2019/790/oj",
+        "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+        "https://cms.law/en/gbr/publication/artificial-intelligence-and-copyright-case-tracker/The-Netherlands-DPG-Media-B.V.-Mediahuis-Nederland-B.V.-Mediahuis-NRC-B.V.-v-Knowledge-Exchange-B.V.-trading-as-Howards-Home-30-October-2024"
+      ],
+      "status": "reported",
+      "primary_checked": [
+        "AI Act art. 85: any natural or legal person may complain to the market surveillance authority (EUR-Lex CELEX 32024R1689, via Legal Data Hunter, 2026-11-17)",
+        "AI Act art. 89(2): complaints about GPAI models are reserved to downstream providers (same source)",
+        "AI Act art. 101(1): GPAI fines up to 3% of worldwide turnover or EUR 15m (same source)",
+        "DGA art. 2(11)(b): excludes services focusing on the intermediation of copyright-protected content (CELEX 32022R0868)",
+        "eIDAS art. 41(1)-(2): non-qualified time stamps admissible; presumption only for qualified ones (CELEX 32014R0910, 2014 text)"
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
       "law": "§44b UrhG (reservation for online works effective only if machine-readable, §44b(3)); §60d research",
       "cases": "OLG Hamburg 10 Dec 2025, 5 U 104/24 (Kneschke v LAION: appeal dismissed, the reservation was reported as not demonstrably machine-readable, use also covered by §60d; revision to the BGH allowed); LG München I 11 Nov 2025, 42 O 14139/24 (GEMA v OpenAI: memorisation is reproduction)",
-      "sources": ["https://www.lto.de/recht/nachrichten/n/42o1413924-lg-muenchen-i-gema-openai-chatgpt-songtexte-ki"], "status": "reported"},
-    "FR": {"name": "France", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU",
+      "sources": [
+        "https://www.lto.de/recht/nachrichten/n/42o1413924-lg-muenchen-i-gema-openai-chatgpt-songtexte-ki"
+      ],
+      "status": "reported"
+    },
+    "FR": {
+      "name": "France",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
       "law": "Art. L.122-5-3 CPI; Senate bill on a presumption of use of works by AI (TA n°85, 8 Apr 2026) pending at the National Assembly",
-      "sources": ["https://www.senat.fr/leg/tas25-085.html"], "status": "reported"},
-    "IT": {"name": "Italy", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU",
+      "sources": [
+        "https://www.senat.fr/leg/tas25-085.html"
+      ],
+      "status": "reported",
+      "primary_checked": [
+        "CPC art. 1450: only a natural person may act as arbitrator; a designated legal person only organises the arbitration (LEGIARTI000023450931)",
+        "CPI art. L.218-4: online services must provide press publishers with all information needed for a transparent assessment of remuneration (LEGIARTI000038826736)"
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
       "law": "Arts. 70-ter, 70-quater LDA; Art. 70-septies (Law 132/2025, in force 10 Oct 2025); Art. 171(1)(a-ter) criminalises unlawful TDM",
-      "sources": ["https://communia-association.org/2025/10/01/italy-updates-its-copyright-law-to-address-ai/"], "status": "reported"},
-    "ES": {"name": "Spain", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU",
-      "law": "TRLPI transposition of DSM Art. 4; draft AI law with labelling fines (not in force)", "sources": ["https://www.merca2.es/2026/05/27/regulacion-ia-espana-multas-prohibidas-2384991/"], "status": "reported"},
-    "NL": {"name": "Netherlands", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU",
-      "law": "Art. 15o Auteurswet", "cases": "Rb Amsterdam 30 Oct 2024 (DPG Media v HowardsHome; appeal reported pending)", "status": "reported"},
-    "PL": {"name": "Poland", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU", "law": "Copyright Act Art. 26³ (in force 20 Sep 2024)", "status": "reported"},
-    "BE": {"name": "Belgium", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU", "law": "National transposition of DSM Art. 4", "status": "reported"},
-    "SE": {"name": "Sweden", "regime": "eu-optout", "opt_out": true, "machine_readable": true, "inherits": "EU", "law": "National transposition of DSM Art. 4", "status": "reported"},
-    "UK": {"name": "United Kingdom", "regime": "no-exception", "opt_out": false,
+      "sources": [
+        "https://communia-association.org/2025/10/01/italy-updates-its-copyright-law-to-address-ai/"
+      ],
+      "status": "reported"
+    },
+    "ES": {
+      "name": "Spain",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
+      "law": "TRLPI transposition of DSM Art. 4; draft AI law with labelling fines (not in force)",
+      "sources": [
+        "https://www.merca2.es/2026/05/27/regulacion-ia-espana-multas-prohibidas-2384991/"
+      ],
+      "status": "reported"
+    },
+    "NL": {
+      "name": "Netherlands",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
+      "law": "Art. 15o Auteurswet",
+      "cases": "Rb Amsterdam 30 Oct 2024 (DPG Media v HowardsHome; appeal reported pending)",
+      "status": "reported"
+    },
+    "PL": {
+      "name": "Poland",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
+      "law": "Copyright Act Art. 26³ (in force 20 Sep 2024)",
+      "status": "reported"
+    },
+    "BE": {
+      "name": "Belgium",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
+      "law": "National transposition of DSM Art. 4",
+      "status": "reported"
+    },
+    "SE": {
+      "name": "Sweden",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
+      "inherits": "EU",
+      "law": "National transposition of DSM Art. 4",
+      "status": "reported"
+    },
+    "UK": {
+      "name": "United Kingdom",
+      "regime": "no-exception",
+      "opt_out": false,
       "law": "CDPA s29A (non-commercial research only; contract override void s29A(5)); government report of 18 Mar 2026 shelved an opt-out exception",
       "search": "CMA conduct requirement (3 Jun 2026): Google must let publishers opt out of AI Overviews / AI Mode at directory then page level without ranking penalty (reported deadlines Dec 2026 / Mar 2027).",
       "cases": "Getty v Stability [2025] EWHC 2863 (Ch); appeal pending",
-      "sources": ["https://www.dlapiper.com/insights/publications/2026/03/tdm-and-training-ai-models-uk-government-publishes-report-and-impact-assessment", "https://www.gov.uk/government/news/further-cma-action-to-secure-a-fairer-deal-for-businesses-and-improve-google-search-services-in-uk"],
-      "status": "reported"},
-    "US": {"name": "United States", "regime": "fair-use", "opt_out": false,
+      "sources": [
+        "https://www.dlapiper.com/insights/publications/2026/03/tdm-and-training-ai-models-uk-government-publishes-report-and-impact-assessment",
+        "https://www.gov.uk/government/news/further-cma-action-to-secure-a-fairer-deal-for-businesses-and-improve-google-search-services-in-uk"
+      ],
+      "status": "reported"
+    },
+    "US": {
+      "name": "United States",
+      "regime": "fair-use",
+      "opt_out": false,
       "law": "17 USC §107; Bartz v Anthropic (2025, $1.5bn settlement approved Jul 2026); Kadrey v Meta (2025); Thomson Reuters v Ross (3d Cir. 29 Sep 2026, not fair use)",
       "labelling": "California SB 942 (operative 2 Aug 2026 via AB 853) binds large GenAI providers, not publishers",
-      "sources": ["https://ipwatchdog.com/2026/09/30/third-circuit-affirms-revised-fair-use-ruling-against-ross-ai-legal-research-platform-in-sealed-opinion/"], "status": "reported"},
-    "CH": {"name": "Switzerland", "regime": "no-exception", "opt_out": false, "law": "Art. 24d CopA (scientific research only); revision under consultation", "status": "reported"},
-    "JP": {"name": "Japan", "regime": "no-optout-exception", "opt_out": false,
+      "sources": [
+        "https://ipwatchdog.com/2026/09/30/third-circuit-affirms-revised-fair-use-ruling-against-ross-ai-legal-research-platform-in-sealed-opinion/"
+      ],
+      "status": "reported"
+    },
+    "CH": {
+      "name": "Switzerland",
+      "regime": "no-exception",
+      "opt_out": false,
+      "law": "Art. 24d CopA (scientific research only); revision under consultation",
+      "status": "reported"
+    },
+    "JP": {
+      "name": "Japan",
+      "regime": "no-optout-exception",
+      "opt_out": false,
       "law": "Copyright Act Art. 30-4 (non-enjoyment uses incl. commercial) unless use 'unreasonably prejudices' rightsholders",
       "named_bot_risk": "Agency for Cultural Affairs, General Understanding (15 Mar 2024): circumventing robots.txt or other technical measures protecting a database offered for analysis may trigger the proviso; RAG outputs may fall outside Art. 30-4.",
       "cases": "Yomiuri, Nikkei & Asahi v Perplexity (Tokyo District Court, filed Aug 2025)",
-      "sources": ["https://www.wipo.int/documents/d/office-japan/docs-en-tatsuhiro-ueno_general-understanding-on-ai-and-copyright-in-japan_set.pdf"], "status": "reported"},
-    "SG": {"name": "Singapore", "regime": "no-optout-exception", "opt_out": false,
+      "sources": [
+        "https://www.wipo.int/documents/d/office-japan/docs-en-tatsuhiro-ueno_general-understanding-on-ai-and-copyright-in-japan_set.pdf"
+      ],
+      "status": "reported"
+    },
+    "SG": {
+      "name": "Singapore",
+      "regime": "no-optout-exception",
+      "opt_out": false,
       "law": "Copyright Act 2021 ss243-244 (computational data analysis, lawful access required); s187 voids contract terms excluding s244",
-      "sources": ["https://www.twobirds.com/en/insights/2021/singapore/coming-up-in-singapore-new-copyright-exception-for-text-and-data-mining"], "status": "reported"},
-    "CN": {"name": "China", "regime": "no-exception", "opt_out": false, "law": "Copyright Law Art. 24 (closed list, no TDM exception)",
+      "sources": [
+        "https://www.twobirds.com/en/insights/2021/singapore/coming-up-in-singapore-new-copyright-exception-for-text-and-data-mining"
+      ],
+      "status": "reported"
+    },
+    "CN": {
+      "name": "China",
+      "regime": "no-exception",
+      "opt_out": false,
+      "law": "Copyright Law Art. 24 (closed list, no TDM exception)",
       "labelling": "CAC Measures for Labelling AI-Generated Synthetic Content + GB 45438-2025, effective 1 Sep 2025 (visible + metadata labels, platforms must detect)",
-      "sources": ["https://www.covingtonblogs.com/2025/03/18/china-releases-new-labeling-requirements-for-ai-generated-content/"], "status": "reported"},
-    "IN": {"name": "India", "regime": "fair-use", "opt_out": false, "law": "Copyright Act s52(1)(a)(i) fair dealing; ANI v OpenAI (Delhi HC, 24 Jul 2026, interim injunction refused); DPIIT working paper proposes a statutory licence",
+      "sources": [
+        "https://www.covingtonblogs.com/2025/03/18/china-releases-new-labeling-requirements-for-ai-generated-content/"
+      ],
+      "status": "reported"
+    },
+    "IN": {
+      "name": "India",
+      "regime": "fair-use",
+      "opt_out": false,
+      "law": "Copyright Act s52(1)(a)(i) fair dealing; ANI v OpenAI (Delhi HC, 24 Jul 2026, interim injunction refused); DPIIT working paper proposes a statutory licence",
       "labelling": "IT Amendment Rules 2026 (G.S.R. 120(E), in force 20 Feb 2026): labels + provenance metadata for synthetically generated audio-visual content",
-      "sources": ["https://spicyip.com/2026/07/training-chatgpt-on-copyrighted-works-prima-facie-protected-under-indian-copyright-act-delhi-high-court-refuses-interim-injunction-against-openai.html"], "status": "reported"},
-    "KR": {"name": "South Korea", "regime": "fair-use", "opt_out": false, "law": "Copyright Act Art. 35-5 general fair use",
+      "sources": [
+        "https://spicyip.com/2026/07/training-chatgpt-on-copyrighted-works-prima-facie-protected-under-indian-copyright-act-delhi-high-court-refuses-interim-injunction-against-openai.html"
+      ],
+      "status": "reported"
+    },
+    "KR": {
+      "name": "South Korea",
+      "regime": "fair-use",
+      "opt_out": false,
+      "law": "Copyright Act Art. 35-5 general fair use",
       "labelling": "AI Basic Act Art. 31 (in force 22 Jan 2026): operators label generative-AI outputs; fines deferred at least one year",
-      "sources": ["https://www.cooley.com/news/insight/2026/2026-01-27-south-koreas-ai-basic-act-overview-and-key-takeaways"], "status": "reported"},
-    "TW": {"name": "Taiwan", "regime": "no-exception", "opt_out": false, "law": "No TDM exception; AI Basic Act (Dec 2025) creates none", "status": "reported"},
-    "AU": {"name": "Australia", "regime": "no-exception", "opt_out": false, "law": "Government ruled out a TDM exception (Oct 2025); licensing approach", "status": "reported"},
-    "CA": {"name": "Canada", "regime": "fair-use", "opt_out": false, "law": "Fair dealing s29; news publishers v OpenAI pending (Ontario)", "status": "reported"},
-    "IL": {"name": "Israel", "regime": "fair-use", "opt_out": false, "law": "Ministry of Justice opinion (18 Dec 2022): ML training typically fair use (s19)", "status": "reported"},
-    "VN": {"name": "Vietnam", "regime": "eu-optout", "opt_out": true, "machine_readable": true,
+      "sources": [
+        "https://www.cooley.com/news/insight/2026/2026-01-27-south-koreas-ai-basic-act-overview-and-key-takeaways"
+      ],
+      "status": "reported"
+    },
+    "TW": {
+      "name": "Taiwan",
+      "regime": "no-exception",
+      "opt_out": false,
+      "law": "No TDM exception; AI Basic Act (Dec 2025) creates none",
+      "status": "reported"
+    },
+    "AU": {
+      "name": "Australia",
+      "regime": "no-exception",
+      "opt_out": false,
+      "law": "Government ruled out a TDM exception (Oct 2025); licensing approach",
+      "status": "reported"
+    },
+    "CA": {
+      "name": "Canada",
+      "regime": "fair-use",
+      "opt_out": false,
+      "law": "Fair dealing s29; news publishers v OpenAI pending (Ontario)",
+      "status": "reported"
+    },
+    "IL": {
+      "name": "Israel",
+      "regime": "fair-use",
+      "opt_out": false,
+      "law": "Ministry of Justice opinion (18 Dec 2022): ML training typically fair use (s19)",
+      "status": "reported"
+    },
+    "VN": {
+      "name": "Vietnam",
+      "regime": "eu-optout",
+      "opt_out": true,
+      "machine_readable": true,
       "law": "IP Law amended by Law 131/2025/QH15 Art. 7(5) (from 1 Apr 2026); Decree 134/2026/ND-CP Art. 37b: reservation via machine-readable metadata, technical protection, rights-management information or collective declaration",
       "labelling": "AI Law 134/2025/QH15 (from 1 Mar 2026): machine-readable marking of AI audio, images, video",
-      "sources": ["https://www.bakermckenzie.com/en/insight/publications/2026/05/vietnam-redefining-copyright-for-ai"], "status": "reported"},
-    "BR": {"name": "Brazil", "regime": "pending", "opt_out": null, "law": "PL 2338/2023 (Senate Dec 2024; Arts. 62-65, remuneration Art. 65) pending in the Chamber", "status": "reported"},
-    "TH": {"name": "Thailand", "regime": "pending", "opt_out": null, "law": "Draft AI law principles: TDM exception with reservation for commercial use (not enacted)", "status": "reported"},
-    "MX": {"name": "Mexico", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "ID": {"name": "Indonesia", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "SA": {"name": "Saudi Arabia", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "TR": {"name": "Turkey", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "AE": {"name": "United Arab Emirates", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "AR": {"name": "Argentina", "regime": "unresearched", "opt_out": null, "status": "unresearched"},
-    "ZA": {"name": "South Africa", "regime": "unresearched", "opt_out": null, "status": "unresearched"}
+      "sources": [
+        "https://www.bakermckenzie.com/en/insight/publications/2026/05/vietnam-redefining-copyright-for-ai"
+      ],
+      "status": "reported"
+    },
+    "BR": {
+      "name": "Brazil",
+      "regime": "pending",
+      "opt_out": null,
+      "law": "PL 2338/2023 (Senate Dec 2024; Arts. 62-65, remuneration Art. 65) pending in the Chamber",
+      "status": "reported"
+    },
+    "TH": {
+      "name": "Thailand",
+      "regime": "pending",
+      "opt_out": null,
+      "law": "Draft AI law principles: TDM exception with reservation for commercial use (not enacted)",
+      "status": "reported"
+    },
+    "MX": {
+      "name": "Mexico",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "ID": {
+      "name": "Indonesia",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "SA": {
+      "name": "Saudi Arabia",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "TR": {
+      "name": "Turkey",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "AE": {
+      "name": "United Arab Emirates",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "AR": {
+      "name": "Argentina",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    },
+    "ZA": {
+      "name": "South Africa",
+      "regime": "unresearched",
+      "opt_out": null,
+      "status": "unresearched"
+    }
   }
 }
