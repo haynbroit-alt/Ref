@@ -10,7 +10,7 @@
 **NOVARYS ne peut pas être « l'arbitre » au sens juridique, et ne doit pas chercher à l'être.**
 
 **Ce que la loi interdit :**
-- **Être arbitre.** En France, seule une personne physique peut arbitrer ; une société peut seulement *organiser* l'arbitrage (art. 1450 CPC, R). Le décret 2026-741, applicable au 1er janvier 2027, consacre le « centre d'arbitrage » (R).
+- **Être arbitre.** En France, seule une personne physique peut arbitrer ; une société peut seulement *organiser* l'arbitrage (art. 1450 CPC, V : « Si la convention d'arbitrage désigne une personne morale, celle-ci ne dispose que du pouvoir d'organiser l'arbitrage »). Le décret 2026-741, applicable au 1er janvier 2027, consacre le « centre d'arbitrage » (R).
 - **Donner des consultations juridiques personnalisées** (loi 71-1130, art. 54 ; jurisprudence *Demander Justice*, Cass. crim. 21 mars 2017, R).
 - **Faire circuler des informations de prix entre éditeurs concurrents** (art. 101 TFUE).
 
@@ -55,7 +55,7 @@ Deux défauts réels ont été trouvés et corrigés grâce aux tests :
 | Levier | Juridique | Technique | Commercial | Économique | Décision |
 |---|---|---|---|---|---|
 | **A. Journal public de transparence des réserves** | Kneschke (réserve « pas démontrablement lisible par machine », R) ; AI Act 53(1)(c) (« technologies de pointe ») ; Rb Amsterdam 2024 (lecture des commentateurs, appel pendant) ; eIDAS art. 41 (horodatage non qualifié recevable, présomption si qualifié) ; résolution PE du 10 mars 2026 et étude Commission du 13 juil. 2026 sur un registre européen (R, pas d'engagement) | Prouvé (§ 1) | Indirect : observateurs en désaccord (14,9 %), réserves changeantes (26 %). Concurrents : Liccium TDM·AI (ISCC, sur la liste de consultation de la Commission), Spawning (seul registre consulté par un fournisseur, Stability) | Coût quasi nul | **GO** |
-| **B. Constat technique neutre** | Preuve libre entre commerçants (C. com. L.110-3, U) ; écrit électronique (C. civ. 1366, U) ; rapport factuel autorisé, conseil personnalisé interdit (loi 71-1130) | Prouvé : déterministe, même empreinte quel que soit le demandeur, vérifiable | Besoin illustré par Kneschke, la mesure 1.5 du code GPAI (contact et plaintes, R/U), l'art. L.218-4 CPI (transparence) et la loi droits voisins 2026 (CMP du 4 nov. 2026, R) | Coût marginal nul | **GO** |
+| **B. Constat technique neutre** | Preuve libre entre commerçants (C. com. L.110-3, U) ; écrit électronique (C. civ. 1366, U) ; rapport factuel autorisé, conseil personnalisé interdit (loi 71-1130) | Prouvé : déterministe, même empreinte quel que soit le demandeur, vérifiable | Besoin illustré par Kneschke, la mesure 1.5 du code GPAI (contact et plaintes, R/U), l'art. L.218-4 CPI (obligation de fournir « tous les éléments d'information […] nécessaires à une évaluation transparente de la rémunération », V) et la loi droits voisins 2026 (CMP du 4 nov. 2026, R) | Coût marginal nul | **GO** |
 | **C. Mesure d'usage neutre et agrégée** | Canada art. 36/38/86 ; Australie, taxe NBI en vigueur depuis le 27 août 2026 (vérification des compensations, R/V) ; Indonésie Perpres 32/2024 art. 7(3) (V) ; STIM (attribution tierce obligatoire, R). Pas d'échange de prix (art. 101 TFUE) | Métriques calculées depuis les logs ; agrégat k-anonyme (k ≥ 5) ; engagement par empreinte | Aucun organisme n'accrédite aujourd'hui la mesure des usages IA (MRC, Médiamétrie, ACPM : niche ouverte, R) | Valeur = coûts de litige évités (≈ 2,8 points de valeur de contrat dans la simulation) | **GO** (méthode v0.1) |
 | **D. Pré-enregistrement de canaris** | Contenu propre ; seule la reproduction a été acceptée en justice (GEMA, LG München I, 11 nov. 2025) ; aucun tribunal n'a encore accepté de statistiques d'appartenance aux données d'entraînement | Propriété statistique prouvée ; détection réelle dépendante de l'accès au modèle (log-probabilités ou poids) | Aucun service neutre de ce type identifié | Coût quasi nul | **GO limité** (outil de preuve, pas de promesse de détection) |
 | E. Être arbitre | Interdit à une personne morale (CPC 1450) | — | — | — | **NO-GO** |
@@ -87,14 +87,14 @@ Tout est déterministe, sans apprentissage automatique, et se vérifie hors lign
 3. **Hors du champ « système d'IA ».** Les règles sont définies par des humains (AI Act art. 3(1) et considérant 12, lignes directrices du 6 février 2025, R). Toute brique d'apprentissage automatique future destinée à aider un médiateur ou un arbitre serait à haut risque (annexe III 8(a)), avec une conformité exigible au 2 décembre 2027.
 4. **Pas d'échange d'informations sensibles.** Aucun prix, et des agrégats seulement à partir de 5 éditeurs (art. 101 TFUE, L.420-1 C. com.).
 5. **RGPD.** Aucune IP humaine en sortie, et les identifiants d'éditeurs ne sont publiés que hachés.
-6. **Aucune prétention officielle.** Pas de « registre européen », pas de droit de plainte au titre de l'AI Act : l'art. 89(2) le réserve aux fournisseurs en aval (V).
+6. **Aucune prétention officielle.** Pas de « registre européen ». La plainte propre aux modèles d'IA à usage général est réservée aux fournisseurs en aval (art. 89(2), V). L'art. 85 permet à « toute personne physique ou morale » de saisir l'autorité de surveillance du marché (V), mais son application aux obligations de ces modèles, supervisées par l'AI Office, reste à confirmer. *Correction du 17 nov. 2026 : j'avais écrit à tort qu'aucune plainte n'était ouverte aux ayants droit.*
 
 ## 5. Gouvernance de neutralité proposée (à valider par avocat)
 
-- **Entité séparée de toute offre « côté éditeur »**, comme l'impose l'art. 12 du DGA pour les intermédiaires de données. Le DGA exclut toutefois les contenus protégés (art. 2(11)(b), U) et n'est donc pas obligatoire ici.
+- **Entité séparée de toute offre « côté éditeur »**, comme l'impose l'art. 12 du DGA pour les intermédiaires de données. Le DGA exclut toutefois les « services that focus on the intermediation of copyright-protected content » (art. 2(11)(b), V) et n'est donc pas obligatoire ici.
 - **Méthodes publiques et versionnées**, révisées par un comité paritaire éditeurs / fournisseurs d'IA sur le modèle des comités d'audience (JIC), avec un droit de réponse avant publication de toute mesure.
 - **Tarification bilatérale publiée et déclaration des intérêts**, par analogie avec l'obligation de révélation de l'arbitre (art. 1456 CPC).
-- **Ancrage des têtes d'arbre** auprès d'un prestataire de confiance qualifié eIDAS, pour la présomption d'exactitude de l'art. 41. Constats décisifs doublés d'un constat de commissaire de justice (NF Z67-147).
+- **Ancrage des têtes d'arbre** auprès d'un prestataire de confiance qualifié eIDAS, pour la présomption d'exactitude de la date, de l'heure et de l'intégrité, réservée à l'horodatage qualifié (art. 41(2), V, texte de 2014). Un horodatage non qualifié reste recevable (art. 41(1), V). Constats décisifs doublés d'un constat de commissaire de justice (NF Z67-147).
 
 ## 6. Modèle économique (qui paie, pourquoi)
 
