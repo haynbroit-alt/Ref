@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-17",
+  "version": "2026-11-18",
   "disclaimer": "Research aid, not legal advice. Items marked 'reported' come from secondary summaries; 'unresearched' markets need local counsel.",
   "regimes": {
     "eu-optout": "Commercial TDM allowed unless the rightsholder reserved it 'in an appropriate manner, such as machine-readable means' (DSM Directive 2019/790 Art. 4(3)); GPAI providers must honour reservations (AI Act Art. 53(1)(c)).",
@@ -29,7 +29,7 @@
         "AI Act art. 89(2): complaints about GPAI models are reserved to downstream providers (same source)",
         "AI Act art. 101(1): GPAI fines up to 3% of worldwide turnover or EUR 15m (same source)",
         "DGA art. 2(11)(b): excludes services focusing on the intermediation of copyright-protected content (CELEX 32022R0868)",
-        "eIDAS art. 41(1)-(2): non-qualified time stamps admissible; presumption only for qualified ones (CELEX 32014R0910, 2014 text)"
+        "eIDAS art. 41(1)-(2): non-qualified time stamps admissible; presumption only for qualified ones (CELEX 32014R0910). Unchanged by Regulation (EU) 2024/1183, whose Art. 1 point (41) only deletes art. 41(3); mutual recognition of qualified time stamps moves to new art. 24a(6) (CELEX 32024R1183, via Legal Data Hunter, 2026-11-18)"
       ]
     },
     "DE": {
@@ -58,7 +58,8 @@
       "status": "reported",
       "primary_checked": [
         "CPC art. 1450: only a natural person may act as arbitrator; a designated legal person only organises the arbitration (LEGIARTI000023450931)",
-        "CPI art. L.218-4: online services must provide press publishers with all information needed for a transparent assessment of remuneration (LEGIARTI000038826736)"
+        "CPI art. L.218-4: online services must provide press publishers with all information needed for a transparent assessment of remuneration (LEGIARTI000038826736)",
+        "CPI art. L.321-6: an independent management entity (organisme de gestion indépendant) is a for-profit legal person managing copyright or related rights for several right holders, not controlled by them, and subject to the Commission de contrôle (LEGIARTI000033687844, 2026-11-18)"
       ]
     },
     "IT": {

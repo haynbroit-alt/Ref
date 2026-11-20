@@ -59,8 +59,8 @@ Deux défauts réels ont été trouvés et corrigés grâce aux tests :
 | **C. Mesure d'usage neutre et agrégée** | Canada art. 36/38/86 ; Australie, taxe NBI en vigueur depuis le 27 août 2026 (vérification des compensations, R/V) ; Indonésie Perpres 32/2024 art. 7(3) (V) ; STIM (attribution tierce obligatoire, R). Pas d'échange de prix (art. 101 TFUE) | Métriques calculées depuis les logs ; agrégat k-anonyme (k ≥ 5) ; engagement par empreinte | Aucun organisme n'accrédite aujourd'hui la mesure des usages IA (MRC, Médiamétrie, ACPM : niche ouverte, R) | Valeur = coûts de litige évités (≈ 2,8 points de valeur de contrat dans la simulation) | **GO** (méthode v0.1) |
 | **D. Pré-enregistrement de canaris** | Contenu propre ; seule la reproduction a été acceptée en justice (GEMA, LG München I, 11 nov. 2025) ; aucun tribunal n'a encore accepté de statistiques d'appartenance aux données d'entraînement | Propriété statistique prouvée ; détection réelle dépendante de l'accès au modèle (log-probabilités ou poids) | Aucun service neutre de ce type identifié | Coût quasi nul | **GO limité** (outil de preuve, pas de promesse de détection) |
 | E. Être arbitre | Interdit à une personne morale (CPC 1450) | — | — | — | **NO-GO** |
-| F. Centre d'arbitrage ou de médiation | Licite (CPC 1450, décret 2026-741, médiation B2B ouverte) ; un outil d'IA d'aide à la résolution des litiges serait à haut risque (AI Act annexe III 8(a), au 2 déc. 2027 via l'Omnibus 2026/1744, R) | Pas un problème logiciel | Google a déjà choisi CEDR pour la médiation DMA 6(12) (R) ; les plateformes refusent ou contournent (Meta, Danemark, U) ; aucune réputation | Arbitres, règlement, avocats : pas à 0 € | **NO-GO maintenant**, option stratégique |
-| G. Mandataire de licences ou OGI | Licite en organisme de gestion indépendant (L.321-6 CPI, R ; directive 2014/26) | — | — | — | **NO-GO** : incompatible avec la neutralité, risque d'entente |
+| F. Centre d'arbitrage ou de médiation | Licite (CPC 1450, V ; décret 2026-741, R, absent des bases primaires consultées ; médiation B2B ouverte) ; un outil d'IA d'aide à la résolution des litiges serait à haut risque (AI Act annexe III 8(a), au 2 déc. 2027 via l'Omnibus 2026/1744, R) | Pas un problème logiciel | Google a déjà choisi CEDR pour la médiation DMA 6(12) (R) ; les plateformes refusent ou contournent (Meta, Danemark, U) ; aucune réputation | Arbitres, règlement, avocats : pas à 0 € | **NO-GO maintenant**, option stratégique |
+| G. Mandataire de licences ou OGI | Licite en organisme de gestion indépendant : personne morale à but lucratif, non contrôlée par les titulaires de droits, soumise à la commission de contrôle (L.321-6 CPI, V ; directive 2014/26) | — | — | — | **NO-GO** : incompatible avec la neutralité, risque d'entente |
 | H. Indice de conformité des crawlers par sites-pièges | Licite sur nos propres domaines ; risque de dénigrement à encadrer | Méthode conçue (environ 865 événements par fournisseur pour ±2 points) | Fort intérêt potentiel | Domaines et hébergement : budget > 0 | **Différé** |
 | I. Contrôle croisé des résumés d'entraînement (AI Act 53(1)(d)) | Le modèle impose le top 10 % des domaines (R) ; publication inégale (5 à 78 résumés selon les sources, U) | Données inaccessibles ici | — | — | **Différé** (collecte à confier à Haiku quand le réseau le permettra) |
 
@@ -94,7 +94,7 @@ Tout est déterministe, sans apprentissage automatique, et se vérifie hors lign
 - **Entité séparée de toute offre « côté éditeur »**, comme l'impose l'art. 12 du DGA pour les intermédiaires de données. Le DGA exclut toutefois les « services that focus on the intermediation of copyright-protected content » (art. 2(11)(b), V) et n'est donc pas obligatoire ici.
 - **Méthodes publiques et versionnées**, révisées par un comité paritaire éditeurs / fournisseurs d'IA sur le modèle des comités d'audience (JIC), avec un droit de réponse avant publication de toute mesure.
 - **Tarification bilatérale publiée et déclaration des intérêts**, par analogie avec l'obligation de révélation de l'arbitre (art. 1456 CPC).
-- **Ancrage des têtes d'arbre** auprès d'un prestataire de confiance qualifié eIDAS, pour la présomption d'exactitude de la date, de l'heure et de l'intégrité, réservée à l'horodatage qualifié (art. 41(2), V, texte de 2014). Un horodatage non qualifié reste recevable (art. 41(1), V). Constats décisifs doublés d'un constat de commissaire de justice (NF Z67-147).
+- **Ancrage des têtes d'arbre** auprès d'un prestataire de confiance qualifié eIDAS, pour la présomption d'exactitude de la date, de l'heure et de l'intégrité, réservée à l'horodatage qualifié (art. 41(2), V). Un horodatage non qualifié reste recevable (art. 41(1), V). Le règlement 2024/1183 ne modifie pas ces deux paragraphes : il supprime seulement l'art. 41(3), dont la reconnaissance mutuelle passe au nouvel art. 24a(6) (V). Constats décisifs doublés d'un constat de commissaire de justice (NF Z67-147).
 
 ## 6. Modèle économique (qui paie, pourquoi)
 
@@ -117,7 +117,7 @@ C'est un calcul de modèle : **aucun acheteur n'a confirmé**, et aucun contact 
 | Depuis le 27 août 2026 | Taxe australienne NBI |
 | Nov. 2026 | Loi française sur l'effectivité des droits voisins (pouvoirs de l'Arcom, votes finaux annoncés pour les 12 et 19 nov.) |
 | En attente | Arrêt CJUE C-250/25 (conclusions de l'avocat général du 3 nov. 2026) |
-| 1er janv. 2027 | Décret 2026-741 (centres d'arbitrage) |
+| 1er janv. 2027 | Décret 2026-741 (centres d'arbitrage ; source secondaire seulement, texte non trouvé en source primaire au 18 nov. 2026) |
 | Mars 2027 | Exclusion des AI Overviews page par page imposée par la CMA |
 | 2 déc. 2027 | Haut risque, annexe III |
 
